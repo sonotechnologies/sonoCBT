@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { monitorableExams } from "@/lib/exams/monitor";
-import { formatDate, formatTime } from "@/lib/format";
+import { formatWindow } from "@/lib/format";
 import { requireStaff } from "@/lib/tenant/context";
 import { cn } from "@/lib/utils";
 
@@ -31,7 +31,7 @@ export default async function MonitorListPage({ params }: PageProps<"/s/[schoolS
               <span className="min-w-0 flex-1">
                 <span className="block text-base font-bold">{e.title}</span>
                 <span className="text-[13px] text-muted-foreground">
-                  {formatDate(e.windowStart)} · {formatTime(e.windowStart)}–{formatTime(e.windowEnd)}
+                  {formatWindow(e.windowStart, e.windowEnd)}
                   {e.venue ? ` · ${e.venue}` : ""}
                   {e.scoped ? " · your room" : ""}
                 </span>

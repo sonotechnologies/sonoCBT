@@ -19,7 +19,8 @@
     "dev:e2e": "node scripts/e2e-server.mjs",
     "snapshots:purge": "tsx --conditions=react-server scripts/purge-snapshots.ts",
     "acceptance:sheet": "tsx --conditions=react-server scripts/acceptance-sheet.ts",
-    "demo:reset": "tsx --conditions=react-server scripts/reset-demo.ts"
+    "demo:reset": "tsx --conditions=react-server scripts/reset-demo.ts",
+    "prod:setup": "tsx --conditions=react-server scripts/setup-production.ts"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",

@@ -18,6 +18,13 @@ export function formatTime(d: Date): string {
   return `${p.hour}:${p.minute}`;
 }
 
+/** 04/10/2026 · 11:15–12:00, or 04/10/2026 11:15 – 05/10/2026 10:45 when it ends on another day. */
+export function formatWindow(start: Date, end: Date): string {
+  const a = formatDate(start);
+  const b = formatDate(end);
+  return a === b ? `${a} · ${formatTime(start)}–${formatTime(end)}` : `${a} ${formatTime(start)} – ${b} ${formatTime(end)}`;
+}
+
 const MONTHS = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
 
 /** { day: "29", month: "SEP" } for date blocks. (en-GB's short form is "Sept", so map it ourselves.) */

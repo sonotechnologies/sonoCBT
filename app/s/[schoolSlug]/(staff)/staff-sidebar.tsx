@@ -32,14 +32,14 @@ export function StaffSidebar({
   const pathname = usePathname();
   return (
     <nav aria-label="Main" className="flex h-full w-[232px] flex-col bg-ink text-paper">
-      <div className="px-5 pt-[22px] pb-[18px]">
+      <div className="flex-none px-5 pt-[22px] pb-[18px]">
         <Logo variant="reversed" size={24} />
       </div>
-      <div className="mx-3 mb-3 flex flex-col gap-0.5 rounded-md bg-ink-raised px-3 py-2.5">
+      <div className="mx-3 mb-3 flex flex-none flex-col gap-0.5 rounded-md bg-ink-raised px-3 py-2.5">
         <div className="text-[13px] font-bold">{schoolName}</div>
         <div className="text-xs text-on-ink-soft">{termLabel}</div>
       </div>
-      <ul className="flex flex-1 flex-col gap-0.5 px-3 py-1">
+      <ul className="flex min-h-0 flex-1 flex-col gap-0.5 overflow-y-auto px-3 py-1 [scrollbar-color:var(--color-ink-line)_transparent] [scrollbar-width:thin]">
         {items.map((it) => {
           // "School setup" links to its first step but stays lit on every step.
           const section = it.href?.replace(/\/setup\/.*$/, "/setup");
@@ -81,7 +81,7 @@ export function StaffSidebar({
           );
         })}
       </ul>
-      <div className="flex items-center gap-2.5 border-t border-ink-line px-5 py-4">
+      <div className="flex flex-none items-center gap-2.5 border-t border-ink-line px-5 py-4">
         <div className="flex size-8 flex-none items-center justify-center rounded-full bg-pencil text-xs font-extrabold text-ink">
           {initialsOf(userName)}
         </div>
