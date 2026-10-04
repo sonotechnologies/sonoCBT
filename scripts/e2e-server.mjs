@@ -27,11 +27,12 @@ const env = {
   BREVO_API_KEY: "",
   RESEND_API_KEY: "",
   GEMINI_API_KEY: "",
-  // Payments go to the in-app Paystack stand-in (no keys, no network).
-  PAYSTACK_MOCK: "1",
+  // Payments go to the in-app Flutterwave stand-in (no keys, no network).
+  FLUTTERWAVE_MOCK: "1",
+  FLUTTERWAVE_WEBHOOK_HASH: "",
   // One-click demo sign-in (Phase 10) is off in production builds unless asked for.
   DEMO_MODE: "1",
-  PAYSTACK_SECRET_KEY: "",
+  FLUTTERWAVE_SECRET_KEY: "",
   SEED_EXAM_OPEN: "1",
   NEXT_DIST_DIR: prod ? ".next-e2e-prod" : ".next-e2e",
 };

@@ -1,8 +1,8 @@
 /**
  * Phase 9 acceptance: "Test payment activates a plan and unlocks gated
  * features." Greenfield has paid Standard this term, so Smart import (Premium)
- * is locked; the admin upgrades through the Paystack test checkout (the
- * in-app stand-in, PAYSTACK_MOCK=1, with a signed webhook) and it unlocks.
+ * is locked; the admin upgrades through the Flutterwave test checkout (the
+ * in-app stand-in, FLUTTERWAVE_MOCK=1, with a hash-checked webhook) and it unlocks.
  * Then the platform owner console: payments, support sign-in, suspend.
  */
 import { expect, test, type Browser, type Page } from "@playwright/test";
@@ -39,11 +39,11 @@ test("a test payment upgrades to Premium and unlocks smart import; the owner con
   await admin.screenshot({ path: "test-results/billing-plans.png", fullPage: true });
   await premium.getByRole("button", { name: "Upgrade to Premium" }).click();
 
-  // Paystack's checkout (test-mode stand-in).
-  await admin.waitForURL(/\/dev\/paystack-checkout/);
-  await expect(admin.getByText("Test mode stand-in for Paystack")).toBeVisible();
+  // Flutterwave's checkout (test-mode stand-in).
+  await admin.waitForURL(/\/dev\/flutterwave-checkout/);
+  await expect(admin.getByText("Test mode stand-in for Flutterwave")).toBeVisible();
   await admin.getByRole("button", { name: "Pay with test card" }).click();
-  await admin.waitForURL(/\/billing\/callback\?reference=/);
+  await admin.waitForURL(/\/billing\/callback\?status=successful&tx_ref=/);
   await expect(admin.getByRole("heading", { name: "Premium is active" })).toBeVisible();
   await admin.screenshot({ path: "test-results/billing-paid.png" });
 

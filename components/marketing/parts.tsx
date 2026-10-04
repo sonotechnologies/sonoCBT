@@ -3,7 +3,7 @@
 export const FAQS: { q: string; a: string }[] = [
   { q: "Do we need internet in the computer lab?", a: "Only to start and to finish syncing. During the exam, answers are stored on each PC and uploaded when the connection is available, so a dropped network or a restarted PC doesn't lose work." },
   { q: "Can SonoCBT lock down a student's own phone or laptop?", a: "No, and we won't pretend otherwise: a web page can't fully lock a personal device. SonoCBT detects and records leaving the exam window, copying and pasting, and second sign-ins, and can submit automatically after repeated switching. For main exams most schools use their lab PCs with the Strict preset." },
-  { q: "Which students do we pay for?", a: "Students on your active class register for the term. Graduated or withdrawn students are not billed. You pay at the start of each term by card or bank transfer through Paystack." },
+  { q: "Which students do we pay for?", a: "Students on your active class register for the term. Graduated or withdrawn students are not billed. You pay at the start of each term by card or bank transfer through Flutterwave." },
   { q: "Can teachers keep writing questions in Word?", a: "Yes. Upload the .docx you already use: SonoCBT finds the questions, options and answers (including maths and pictures) and flags anything it isn't sure about for a teacher to check." },
   { q: "Can we move our old results in?", a: "Yes. Send us your broadsheets as Excel files and we import them during setup." },
   { q: "Do parents need an app?", a: "No. Parents check released results on their phone's browser with a scratch-card PIN, download the report card as a PDF, and can scan its QR code to confirm it's genuine." },

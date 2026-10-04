@@ -1,5 +1,5 @@
 /**
- * Phase 9: billing rules, Paystack payments (API stubbed) and feature gating.
+ * Phase 9: billing rules, Flutterwave payments (API stubbed) and feature gating.
  * Acceptance: "Test payment activates a plan and unlocks gated features."
  */
 import { eq } from "drizzle-orm";
@@ -15,7 +15,7 @@ import { createSchoolWithAdmin, saveClassesAndSubjects } from "@/lib/school/setu
 import { tenantScope, type TenantScope } from "@/lib/tenant/scope";
 import { createTestDb } from "@/test/db";
 import { featureBlock } from "./gate";
-import { signBody, validSignature } from "./paystack";
+import { validWebhookHash } from "./flutterwave";
 import { applyTransaction, confirmPayment, quote, startCheckout } from "./service";
 import { billingState, computeBilling, hasFeature } from "./state";
 
@@ -62,22 +62,26 @@ describe("payments", () => {
   let schoolId: string;
   let admin: Actor;
   let subjectId: string;
-  const paystack = new Map<string, { status: string; amount: number }>();
+  /** Flutterwave transactions by tx_ref (amounts in naira, as Flutterwave reports them). */
+  const flw = new Map<string, { status: string; amount: number }>();
 
   beforeAll(async () => {
-    process.env.PAYSTACK_SECRET_KEY = "sk_test_unit";
+    process.env.FLUTTERWAVE_SECRET_KEY = "FLWSECK_TEST-unit";
+    process.env.FLUTTERWAVE_WEBHOOK_HASH = "unit-hash";
     process.env.NEXT_PUBLIC_APP_URL = "http://localhost:3000";
-    // Paystack's API, stubbed: initialize answers with a checkout URL; verify reports what we set.
+    // Flutterwave's API, stubbed: /v3/payments answers with a hosted link; verify_by_reference reports what we set.
     vi.stubGlobal("fetch", async (url: string, init?: RequestInit) => {
       const u = String(url);
-      if (u.endsWith("/transaction/initialize")) {
+      expect(init?.headers).toMatchObject({ Authorization: "Bearer FLWSECK_TEST-unit" });
+      if (u.endsWith("/v3/payments")) {
         const b = JSON.parse(String(init?.body));
-        expect(init?.headers).toMatchObject({ Authorization: "Bearer sk_test_unit" });
-        return Response.json({ status: true, data: { authorization_url: `https://checkout.paystack.com/${b.reference}`, reference: b.reference } });
+        expect(b).toMatchObject({ currency: "NGN", tx_ref: expect.stringMatching(/^SNC-/) });
+        return Response.json({ status: "success", message: "Hosted Link", data: { link: `https://checkout.flutterwave.com/v3/hosted/pay/${b.tx_ref}` } });
       }
-      const ref = decodeURIComponent(u.split("/transaction/verify/")[1] ?? "");
-      const tx = paystack.get(ref);
-      return Response.json({ status: true, data: { status: tx?.status ?? "abandoned", reference: ref, amount: tx?.amount ?? 0, currency: "NGN", id: 1, channel: "card", paid_at: "2026-10-02T10:00:00Z" } });
+      const ref = new URL(u).searchParams.get("tx_ref") ?? "";
+      const tx = flw.get(ref);
+      if (!tx) return Response.json({ status: "error", message: "No transaction was found for this id", data: null }, { status: 400 });
+      return Response.json({ status: "success", data: { id: 1, tx_ref: ref, status: tx.status, amount: tx.amount, currency: "NGN", payment_type: "card", created_at: "2026-10-02T10:00:00Z" } });
     });
     db = await createTestDb();
     const s = await createSchoolWithAdmin(db, { schoolName: "Pay School", adminName: "A", email: "a@pay.ng", password: "password-1" });
@@ -101,12 +105,12 @@ describe("payments", () => {
     expect(await featureBlock(scope, "analytics")).toMatch(/lapsed/);
   });
 
-  it("quotes per student and starts a Paystack checkout", async () => {
+  it("quotes per student and starts a Flutterwave checkout (in naira)", async () => {
     expect(await quote(db, schoolId, "standard")).toMatchObject({ students: 12, pricePerStudent: 90_000, amount: 12 * 90_000, upgradeFrom: null });
     const officer: Actor = { id: admin.id, roles: [{ role: "exam_officer", schoolId }] };
     await expect(startCheckout(db, officer, "pay-school", schoolId, "standard", "a@pay.ng")).rejects.toThrow(/school admin/);
     const c = await startCheckout(db, admin, "pay-school", schoolId, "standard", "a@pay.ng");
-    expect(c.authorizationUrl).toBe(`https://checkout.paystack.com/${c.reference}`);
+    expect(c.authorizationUrl).toBe(`https://checkout.flutterwave.com/v3/hosted/pay/${c.reference}`);
     expect(await db.select().from(t.subscription).where(eq(t.subscription.reference, c.reference))).toEqual([expect.objectContaining({ status: "pending", amount: 1_080_000, studentCount: 12 })]);
   });
 
@@ -115,7 +119,7 @@ describe("payments", () => {
     // Returning without paying changes nothing.
     expect(await confirmPayment(db, c.reference)).toMatchObject({ outcome: "failed" });
     const again = await startCheckout(db, admin, "pay-school", schoolId, "standard", "a@pay.ng");
-    paystack.set(again.reference, { status: "success", amount: 1_080_000 });
+    flw.set(again.reference, { status: "successful", amount: 10_800 });
     expect(await confirmPayment(db, again.reference)).toMatchObject({ outcome: "paid", plan: "standard" });
     expect(await confirmPayment(db, again.reference)).toMatchObject({ outcome: "already_paid" });
     const b = await billingState(db, schoolId);
@@ -135,18 +139,17 @@ describe("payments", () => {
     expect(await applyTransaction(db, { status: "success", reference: c.reference, amount: 100, currency: "NGN", id: 9, channel: "card", paidAt: null })).toMatchObject({ outcome: "failed" });
     expect(await db.select().from(t.auditLog).where(eq(t.auditLog.action, "billing.mismatch"))).toHaveLength(1);
     const ok = await startCheckout(db, admin, "pay-school", schoolId, "premium", "a@pay.ng");
-    paystack.set(ok.reference, { status: "success", amount: 600_000 });
+    flw.set(ok.reference, { status: "successful", amount: 6_000 });
     expect(await confirmPayment(db, ok.reference)).toMatchObject({ outcome: "paid" });
     expect(await featureBlock(scope, "smart_import")).toBeNull();
     expect((await billingState(db, schoolId)).plan).toBe("premium");
   });
 
-  it("accepts webhooks only with Paystack's signature", () => {
-    const body = JSON.stringify({ event: "charge.success", data: { reference: "x" } });
-    expect(validSignature(body, signBody(body, "sk_test_unit"))).toBe(true);
-    expect(validSignature(body, signBody(body, "sk_test_other"))).toBe(false);
-    expect(validSignature(body + " ", signBody(body, "sk_test_unit"))).toBe(false);
-    expect(validSignature(body, null)).toBe(false);
+  it("accepts webhooks only with Flutterwave's secret hash", () => {
+    expect(validWebhookHash("unit-hash")).toBe(true);
+    expect(validWebhookHash("unit-hash ")).toBe(false);
+    expect(validWebhookHash("other")).toBe(false);
+    expect(validWebhookHash(null)).toBe(false);
   });
 
   it("the platform owner lists schools and can suspend one (logged); nobody else can", async () => {

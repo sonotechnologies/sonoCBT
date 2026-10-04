@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { eq } from "drizzle-orm";
 import { checkoutAction } from "@/lib/billing/actions";
-import { paymentsReady } from "@/lib/billing/paystack";
+import { paymentsReady } from "@/lib/billing/flutterwave";
 import { naira, PLANS, planByCode, type PlanCode } from "@/lib/billing/plans";
 import { paymentHistory } from "@/lib/billing/service";
 import { billingState } from "@/lib/billing/state";
@@ -57,12 +57,12 @@ export default async function BillingPage({ params, searchParams }: PageProps<"/
             {error}
           </p>
         )}
-        {!ready && <p className="rounded-md bg-secondary px-4 py-3 text-sm text-ink-2">Card payments aren&apos;t set up on this server yet (PAYSTACK_SECRET_KEY). Plans are shown for reference.</p>}
+        {!ready && <p className="rounded-md bg-secondary px-4 py-3 text-sm text-ink-2">Card payments aren&apos;t set up on this server yet (FLUTTERWAVE_SECRET_KEY). Plans are shown for reference.</p>}
 
         <div>
           <h2 className="text-lg font-extrabold">Priced per student, per term</h2>
           <p className="mt-1 text-sm text-ink-2">
-            {b.activeStudents} students in classes now. Pay by card or bank transfer through Paystack.
+            {b.activeStudents} students in classes now. Pay by card, bank transfer or USSD through Flutterwave.
           </p>
         </div>
         <div className="grid gap-4 lg:grid-cols-3">

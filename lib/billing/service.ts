@@ -6,7 +6,7 @@ import { can, type Actor } from "@/lib/auth/permissions";
 import type { Db } from "@/lib/db/client";
 import { school, subscription, term, user } from "@/lib/db/schema";
 import { appUrl } from "@/lib/pdf/assets";
-import { initializeTransaction, PaymentError, verifyTransaction, type VerifiedTransaction } from "./paystack";
+import { initializeTransaction, PaymentError, verifyTransaction, type VerifiedTransaction } from "./flutterwave";
 import { planByCode, type PlanCode } from "./plans";
 import { billingState } from "./state";
 
@@ -28,7 +28,7 @@ export async function quote(db: Db, schoolId: string, plan: PlanCode, now = new 
   return { plan, students: b.activeStudents, pricePerStudent: price, amount: (price - already) * b.activeStudents, upgradeFrom: b.paidPlan, termId: b.currentTermId };
 }
 
-/** Creates a pending payment and returns Paystack's checkout page to send the admin to. */
+/** Creates a pending payment and returns Flutterwave's checkout page to send the admin to. */
 export async function startCheckout(db: Db, actor: Actor, slug: string, schoolId: string, plan: PlanCode, email: string, now = new Date()) {
   if (!can(actor, "billing.manage", { schoolId })) throw new PaymentError("Only the school admin can pay for the school.");
   const [s] = await db.select({ isDemo: school.isDemo }).from(school).where(eq(school.id, schoolId));
@@ -52,7 +52,7 @@ export async function startCheckout(db: Db, actor: Actor, slug: string, schoolId
 export type Applied = { outcome: "paid" | "already_paid" | "failed" | "unknown"; plan?: PlanCode; schoolId?: string };
 
 /**
- * Records what Paystack says about a payment. Used by both the webhook and
+ * Records what Flutterwave says about a payment. Used by both the webhook and
  * the return page, so it must be safe to run twice; the amount and currency
  * must match what we asked for.
  */
@@ -92,7 +92,7 @@ export async function applyTransaction(db: Db, tx: VerifiedTransaction, now = ne
   });
 }
 
-/** The return page: ask Paystack, then record it. */
+/** The return page: ask Flutterwave, then record it. */
 export async function confirmPayment(db: Db, reference: string): Promise<Applied> {
   return applyTransaction(db, await verifyTransaction(reference));
 }

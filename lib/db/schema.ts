@@ -1045,7 +1045,7 @@ export const reportCardCode = pgTable(
 
 export const subscriptionStatus = pgEnum("subscription_status", ["pending", "paid", "failed"]);
 
-/** One term's payment for a plan (Paystack). */
+/** One term's payment for a plan (Flutterwave). */
 export const subscription = pgTable(
   "subscription",
   {
@@ -1061,7 +1061,7 @@ export const subscription = pgTable(
     /** Kobo. An upgrade during a paid term charges only the difference. */
     amount: integer("amount").notNull(),
     currency: text("currency").notNull().default("NGN"),
-    /** Our reference, sent to Paystack; unique across all schools. */
+    /** Our reference (Flutterwave's tx_ref); unique across all schools. */
     reference: text("reference").notNull().unique(),
     status: subscriptionStatus("status").notNull().default("pending"),
     paidAt: timestamp("paid_at", { withTimezone: true }),

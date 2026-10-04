@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { eq } from "drizzle-orm";
 import { buttonVariants } from "@/components/ui/button";
-import { PaymentError } from "@/lib/billing/paystack";
+import { PaymentError } from "@/lib/billing/flutterwave";
 import { planByCode } from "@/lib/billing/plans";
 import { confirmPayment } from "@/lib/billing/service";
 import { getDb } from "@/lib/db";
@@ -12,12 +12,12 @@ import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = { title: "Payment" };
 
-/** Where Paystack sends the admin back. We check with Paystack before believing it. */
+/** Where Flutterwave sends the admin back (with tx_ref). We check with Flutterwave before believing it. */
 export default async function PaymentCallback({ params, searchParams }: PageProps<"/s/[schoolSlug]/billing/callback">) {
   const { schoolSlug } = await params;
   const sp = await searchParams;
   const ctx = await requireCan(schoolSlug, "billing.manage");
-  const reference = String(sp.reference ?? sp.trxref ?? "");
+  const reference = String(sp.tx_ref ?? sp.reference ?? "");
   const sub = reference ? await ctx.scope.findFirst(subscription, eq(subscription.reference, reference)) : undefined;
   let outcome: "paid" | "failed" | "waiting" | "unknown" = "unknown";
   let problem: string | null = null;
@@ -34,7 +34,7 @@ export default async function PaymentCallback({ params, searchParams }: PageProp
   const view = {
     paid: { title: `${sub ? planByCode(sub.plan).name : ""} is active`, body: "Payment received. Every feature on your plan is switched on for this term.", cls: "border-[#BFE0CB] bg-[#E8F4EC] text-[#155E34]" },
     failed: { title: "The payment didn't go through", body: "Nothing was charged. You can try again from Billing.", cls: "border-[#F2C6C2] bg-[#FBEAE9] text-[#7A1F18]" },
-    waiting: { title: "Waiting for Paystack", body: problem ?? "We haven't had confirmation yet. If you paid, this page will update shortly; Paystack also tells us directly.", cls: "border-[#F3D3B5] bg-[#FDF1E6] text-[#7A3B0A]" },
+    waiting: { title: "Waiting for Flutterwave", body: problem ?? "We haven't had confirmation yet. If you paid, this page will update shortly; Flutterwave also tells us directly.", cls: "border-[#F3D3B5] bg-[#FDF1E6] text-[#7A3B0A]" },
     unknown: { title: "Payment not found", body: "That payment reference isn't one of this school's.", cls: "border-border bg-card text-foreground" },
   }[outcome];
 
