@@ -1,0 +1,58 @@
+[
+  {
+    "n": 1,
+    "type": "mcq_single",
+    "stem": "The plural of 'child' is",
+    "options": 4,
+    "correct": "B"
+  },
+  {
+    "n": 2,
+    "type": "mcq_single",
+    "stem": "Choose the word that is opposite in meaning to 'generous'.",
+    "options": 4,
+    "correct": "B"
+  },
+  {
+    "n": 3,
+    "type": "mcq_single",
+    "stem": "She ____ to school every day.",
+    "options": 4,
+    "correct": "B"
+  },
+  {
+    "n": 4,
+    "type": "mcq_single",
+    "stem": "Which of these is a noun?",
+    "options": 4,
+    "correct": "C"
+  },
+  {
+    "n": 5,
+    "type": "mcq_single",
+    "stem": "The past tense of 'eat' is",
+    "options": 4,
+    "correct": "B"
+  },
+  {
+    "n": 6,
+    "type": "mcq_single",
+    "stem": "Choose the correctly spelt word.",
+    "options": 4,
+    "correct": "B"
+  },
+  {
+    "n": 7,
+    "type": "mcq_single",
+    "stem": "A group of cattle is called a",
+    "options": 4,
+    "correct": "A"
+  },
+  {
+    "n": 8,
+    "type": "mcq_single",
+    "stem": "'He is as brave as a lion' is an example of",
+    "options": 4,
+    "correct": "B"
+  }
+]

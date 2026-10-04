@@ -1,0 +1,44 @@
+[
+  {
+    "n": 1,
+    "type": "mcq_single",
+    "stem": "\\frac{3}{4}+\\frac{1}{6}",
+    "options": 4,
+    "correct": "B"
+  },
+  {
+    "n": 2,
+    "type": "mcq_single",
+    "stem": "{2}^{3}\\times {2}^{2}",
+    "options": 4,
+    "correct": "A"
+  },
+  {
+    "n": 3,
+    "type": "mcq_single",
+    "stem": "\\sqrt{144}",
+    "options": 4,
+    "correct": "B"
+  },
+  {
+    "n": 4,
+    "type": "mcq_single",
+    "stem": "x=\\frac{1}{2}",
+    "options": 4,
+    "correct": "A"
+  },
+  {
+    "n": 5,
+    "type": "mcq_single",
+    "stem": "{H}_{2}O",
+    "options": 4,
+    "correct": "B"
+  },
+  {
+    "n": 6,
+    "type": "mcq_single",
+    "stem": "3y-4=11",
+    "options": 4,
+    "correct": "B"
+  }
+]

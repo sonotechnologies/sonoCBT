@@ -1,0 +1,72 @@
+[
+  {
+    "n": 1,
+    "type": "mcq_single",
+    "stem": "The capital of Nigeria is",
+    "options": 4,
+    "correct": "B"
+  },
+  {
+    "n": 2,
+    "type": "mcq_single",
+    "stem": "The first president of Nigeria was",
+    "options": 4,
+    "correct": "A"
+  },
+  {
+    "n": 3,
+    "type": "mcq_single",
+    "stem": "Nigeria became a republic in",
+    "options": 4,
+    "correct": "B"
+  },
+  {
+    "n": 4,
+    "type": "mcq_single",
+    "stem": "The longest river in Nigeria is the River",
+    "options": 4,
+    "correct": "B"
+  },
+  {
+    "n": 5,
+    "type": "mcq_single",
+    "stem": "Which of these is a traditional ruler in Yorubaland?",
+    "options": 4,
+    "correct": "C"
+  },
+  {
+    "n": 6,
+    "type": "mcq_single",
+    "stem": "The colour of the Nigerian flag is",
+    "options": 4,
+    "correct": "A"
+  },
+  {
+    "n": 7,
+    "type": "mcq_single",
+    "stem": "Civic education teaches us our rights and",
+    "options": 4,
+    "correct": "B"
+  },
+  {
+    "n": 8,
+    "type": "mcq_single",
+    "stem": "A citizen who is loyal to his country is",
+    "options": 4,
+    "correct": "A"
+  },
+  {
+    "n": 9,
+    "type": "mcq_single",
+    "stem": "The arm of government that makes laws is the",
+    "options": 4,
+    "correct": "C"
+  },
+  {
+    "n": 10,
+    "type": "mcq_single",
+    "stem": "Corruption can be reduced by",
+    "options": 4,
+    "correct": "B"
+  }
+]

@@ -1,0 +1,58 @@
+[
+  {
+    "n": 1,
+    "type": "mcq_single",
+    "stem": "Which of these is an input device?",
+    "options": 4,
+    "correct": "C"
+  },
+  {
+    "n": 2,
+    "type": "mcq_single",
+    "stem": "The brain of the computer is the",
+    "options": 4,
+    "correct": "B"
+  },
+  {
+    "n": 3,
+    "type": "mcq_single",
+    "stem": "Which of these is an operating system?",
+    "options": 4,
+    "correct": "A"
+  },
+  {
+    "n": 4,
+    "type": "mcq_single",
+    "stem": "1 kilobyte is equal to",
+    "options": 4,
+    "correct": "C"
+  },
+  {
+    "n": 5,
+    "type": "mcq_single",
+    "stem": "A program used to browse the internet is a",
+    "options": 4,
+    "correct": "A"
+  },
+  {
+    "n": 6,
+    "type": "mcq_single",
+    "stem": "Which key is used to delete characters to the left of the cursor?",
+    "options": 4,
+    "correct": "B"
+  },
+  {
+    "n": 7,
+    "type": "mcq_single",
+    "stem": "Which of these stores data permanently?",
+    "options": 4,
+    "correct": "C"
+  },
+  {
+    "n": 8,
+    "type": "mcq_single",
+    "stem": "The full meaning of ICT is Information and Communication",
+    "options": 4,
+    "correct": "B"
+  }
+]

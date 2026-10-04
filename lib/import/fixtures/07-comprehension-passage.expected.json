@@ -1,0 +1,55 @@
+[
+  {
+    "n": 1,
+    "type": "mcq_single",
+    "stem": "How often is the market held?",
+    "options": 4,
+    "correct": "B",
+    "passage": true
+  },
+  {
+    "n": 2,
+    "type": "mcq_single",
+    "stem": "What does Mama Tunde sell?",
+    "options": 4,
+    "correct": "C",
+    "passage": true
+  },
+  {
+    "n": 3,
+    "type": "mcq_single",
+    "stem": "Where does Mama Tunde sell?",
+    "options": 4,
+    "correct": "A",
+    "passage": true
+  },
+  {
+    "n": 4,
+    "type": "mcq_single",
+    "stem": "What do the elders discuss?",
+    "options": 4,
+    "correct": "B",
+    "passage": true
+  },
+  {
+    "n": 5,
+    "type": "mcq_single",
+    "stem": "Choose the word nearest in meaning to 'crowded'.",
+    "options": 4,
+    "correct": "B"
+  },
+  {
+    "n": 6,
+    "type": "mcq_single",
+    "stem": "Choose the word opposite in meaning to 'dawn'.",
+    "options": 4,
+    "correct": "B"
+  },
+  {
+    "n": 7,
+    "type": "mcq_single",
+    "stem": "An 'errand' is a",
+    "options": 4,
+    "correct": "A"
+  }
+]

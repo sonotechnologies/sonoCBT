@@ -1,0 +1,56 @@
+[
+  {
+    "n": 1,
+    "type": "mcq_single",
+    "stem": "conductor of electricity",
+    "options": 4,
+    "correct": "B"
+  },
+  {
+    "n": 2,
+    "type": "mcq_single",
+    "stem": "relative molecular mass",
+    "options": 4,
+    "correct": "C"
+  },
+  {
+    "n": 3,
+    "type": "true_false",
+    "stem": "Sound travels faster than light",
+    "tf": false
+  },
+  {
+    "n": 4,
+    "type": "true_false",
+    "stem": "Plants give out oxygen",
+    "tf": true
+  },
+  {
+    "n": 5,
+    "type": "numeric",
+    "stem": "average speed",
+    "numeric": "60"
+  },
+  {
+    "n": 6,
+    "type": "mcq_single",
+    "stem": "apparatus shown below",
+    "options": 4,
+    "correct": "B"
+  },
+  {
+    "n": 7,
+    "type": "mcq_single",
+    "stem": "NOT a simple machine",
+    "options": 4,
+    "correct": "D"
+  },
+  {
+    "n": 8,
+    "type": "mcq_single",
+    "stem": "SI unit of power",
+    "options": 4,
+    "correct": "",
+    "confidence": "amber"
+  }
+]

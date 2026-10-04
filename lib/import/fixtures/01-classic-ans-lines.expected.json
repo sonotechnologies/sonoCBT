@@ -1,0 +1,58 @@
+[
+  {
+    "n": 1,
+    "type": "mcq_single",
+    "stem": "Which of the following is an alkali metal?",
+    "options": 4,
+    "correct": "B"
+  },
+  {
+    "n": 2,
+    "type": "mcq_single",
+    "stem": "The chemical symbol for potassium is",
+    "options": 4,
+    "correct": "C"
+  },
+  {
+    "n": 3,
+    "type": "mcq_single",
+    "stem": "Which gas turns lime water milky?",
+    "options": 4,
+    "correct": "C"
+  },
+  {
+    "n": 4,
+    "type": "mcq_single",
+    "stem": "An example of a physical change is",
+    "options": 4,
+    "correct": "C"
+  },
+  {
+    "n": 5,
+    "type": "mcq_single",
+    "stem": "The process by which plants make food is called",
+    "options": 4,
+    "correct": "B"
+  },
+  {
+    "n": 6,
+    "type": "mcq_single",
+    "stem": "Which of these is a noble gas?",
+    "options": 4,
+    "correct": "B"
+  },
+  {
+    "n": 7,
+    "type": "mcq_single",
+    "stem": "Water boils at ____ °C at sea level.",
+    "options": 4,
+    "correct": "B"
+  },
+  {
+    "n": 8,
+    "type": "mcq_single",
+    "stem": "Which organ pumps blood round the body?",
+    "options": 4,
+    "correct": "C"
+  }
+]

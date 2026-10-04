@@ -1,0 +1,327 @@
+@import "tailwindcss";
+
+/*
+ * SonoCBT design tokens (see design bundle tokens/sonocbt-theme.css).
+ * shadcn/ui names are kept so generated components pick them up.
+ */
+:root {
+  --background: #faf8f3; /* paper */
+  --foreground: #14213d; /* ink */
+  --card: #ffffff;
+  --card-foreground: #14213d;
+  --popover: #ffffff;
+  --popover-foreground: #14213d;
+  --primary: #14213d;
+  --primary-foreground: #ffffff;
+  --secondary: #f4f1e8;
+  --secondary-foreground: #14213d;
+  --muted: #f4f1e8;
+  --muted-foreground: #5b6478;
+  --accent: #f2b705; /* pencil — fill only, ink text on it */
+  --accent-foreground: #14213d;
+  --destructive: #c8342b;
+  --destructive-foreground: #ffffff;
+  --success: #1f8a4c;
+  --warning: #d9731a;
+  --info: #2f6fb5;
+  --border: #e4e1d8;
+  --divider: #efece4;
+  --input: #c9ccd4;
+  --ring: #2f6fb5;
+  --ink-2: #3e4760; /* body copy on paper */
+  --hatch: #f3f0e8; /* photo / logo placeholder stripes */
+  --chip: #eef0f5;
+  --on-ink-muted: #c9d0de;
+  --canvas: #ece9e1;
+  --radius: 0.625rem;
+}
+
+.dark {
+  --background: #0e1729;
+  --foreground: #faf8f3;
+  --card: #16223a;
+  --card-foreground: #faf8f3;
+  --popover: #16223a;
+  --popover-foreground: #faf8f3;
+  --primary: #f2b705;
+  --primary-foreground: #14213d;
+  --secondary: #1d2c4d;
+  --secondary-foreground: #faf8f3;
+  --muted: #1d2c4d;
+  --muted-foreground: #b9c1d3;
+  --destructive: #e5574d;
+  --success: #3fb573;
+  --warning: #f0923f;
+  --info: #5b9be0;
+  --border: #26375c;
+  --divider: #26375c;
+  --input: #3f4f75;
+  --ring: #5b9be0;
+  --ink-2: #c9d0de;
+  --hatch: #1d2c4d;
+  --chip: #1d2c4d;
+}
+
+.contrast {
+  --background: #ffffff;
+  --foreground: #000000;
+  --card: #ffffff;
+  --card-foreground: #000000;
+  --primary: #000000;
+  --primary-foreground: #ffffff;
+  --muted-foreground: #262626;
+  --accent-foreground: #000000;
+  --destructive: #a11b14;
+  --success: #0b6b34;
+  --warning: #a34e00;
+  --info: #1d4f9a;
+  --border: #000000;
+  --divider: #000000;
+  --input: #000000;
+  --ring: #0050c8;
+  --ink-2: #000000;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-info: var(--info);
+  --color-border: var(--border);
+  --color-divider: var(--divider);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ink: #14213d;
+  --color-ink-2: var(--ink-2);
+  --color-ink-raised: #1d2c4d;
+  --color-ink-active: #26375c;
+  --color-ink-line: #253659;
+  --color-paper: #faf8f3;
+  --color-pencil: #f2b705;
+  --color-hatch: var(--hatch);
+  --color-chip: var(--chip);
+  --color-on-ink-muted: var(--on-ink-muted);
+  --color-on-ink-soft: #b9c1d3;
+  --color-canvas: var(--canvas);
+
+  --font-sans: var(--font-jakarta), system-ui, sans-serif;
+  --font-exam: var(--font-atkinson), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px); /* 8px: inputs, buttons */
+  --radius-lg: var(--radius); /* 10px */
+  --radius-xl: calc(var(--radius) + 2px); /* 12px: cards */
+
+  --shadow-phone: 0 0 0 10px #14213d, 0 30px 60px rgba(20, 33, 61, 0.25);
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+  }
+  a {
+    color: inherit;
+  }
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+  }
+  :focus-visible {
+    outline: 3px solid var(--ring);
+    outline-offset: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@utility hatch {
+  background: repeating-linear-gradient(135deg, var(--hatch) 0 5px, var(--background) 5px 10px);
+}
+
+@utility eyebrow {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+/* Rich question content, as students see it (Atkinson Hyperlegible). */
+@utility rich {
+  font-family: var(--font-exam);
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+  & p {
+    margin: 0 0 0.5em;
+  }
+  & p:last-child {
+    margin-bottom: 0;
+  }
+  & ul {
+    list-style: disc;
+    padding-left: 1.4em;
+  }
+  & ol {
+    list-style: decimal;
+    padding-left: 1.4em;
+  }
+  & img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 6px;
+    margin: 0.4em 0;
+  }
+  & table {
+    border-collapse: collapse;
+    margin: 0.5em 0;
+    display: block;
+    overflow-x: auto;
+  }
+  & td,
+  & th {
+    border: 1px solid var(--input);
+    padding: 4px 8px;
+    min-width: 2.5em;
+    vertical-align: top;
+  }
+  & th {
+    background: var(--secondary);
+    font-weight: 700;
+  }
+  & .katex {
+    font-size: 1.05em;
+  }
+  & .math-block {
+    margin: 0.5em 0;
+    overflow-x: auto;
+  }
+}
+
+/* Tiptap editor */
+.ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+  color: var(--muted-foreground);
+}
+.ProseMirror [data-type="inline-math"],
+.ProseMirror [data-type="block-math"] {
+  cursor: pointer;
+  border-radius: 4px;
+  padding: 0 2px;
+  background: var(--chip);
+}
+.ProseMirror .selectedCell::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(47, 111, 181, 0.12);
+  pointer-events: none;
+}
+.ProseMirror td,
+.ProseMirror th {
+  position: relative;
+}
+.ProseMirror img.ProseMirror-selectednode {
+  outline: 3px solid var(--ring);
+}
+
+/* Smart import: original document pane */
+.import-original > * {
+  margin: 0 -12px 10px;
+  padding: 2px 12px;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+.import-original img {
+  max-width: 100%;
+}
+.import-original table {
+  border-collapse: collapse;
+}
+.import-original td {
+  border: 1px solid #ccc;
+  padding: 2px 6px;
+}
+.import-original .import-hit {
+  background: #fff4cc;
+  box-shadow: inset 3px 0 0 #f2b705;
+}
+.import-original .eq-review {
+  outline: 2px dashed var(--destructive);
+  outline-offset: 2px;
+}
+
+/* Exam runtime: colours from the design's light / dark / high-contrast maps */
+.exam {
+  --ex-sel: #fff8e1;
+  --ex-opt-line: #d5d8df;
+  --ex-bubble-line: #8c93a3;
+  --ex-cell-line: #9aa1b0;
+  --ex-passage: #f4f1e8;
+  --ex-key: #d5d2c8;
+}
+.exam.dark {
+  --ex-sel: #2a2a1e;
+  --ex-opt-line: #34466c;
+  --ex-bubble-line: #8c9ab8;
+  --ex-cell-line: #6d7ca0;
+  --ex-passage: #1f2c47;
+  --ex-key: #3a4c72;
+}
+.exam.contrast {
+  --ex-sel: #fff1b8;
+  --ex-opt-line: #000000;
+  --ex-bubble-line: #000000;
+  --ex-cell-line: #000000;
+  --ex-passage: #f2f2f2;
+  --ex-key: #000000;
+}
+.exam-content img {
+  max-width: 100%;
+  cursor: zoom-in;
+  border-radius: 8px;
+}
+.exam-content p {
+  margin: 0 0 0.6em;
+}
+.exam-content p:last-child {
+  margin-bottom: 0;
+}
+.exam-nocopy {
+  user-select: none;
+  -webkit-user-select: none;
+}

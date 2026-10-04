@@ -1,0 +1,62 @@
+[
+  {
+    "n": 1,
+    "type": "mcq_single",
+    "stem": "Simplify 3 + 4 × 2.",
+    "options": 4,
+    "correct": "B"
+  },
+  {
+    "n": 2,
+    "type": "mcq_single",
+    "stem": "What is 25% of 80?",
+    "options": 4,
+    "correct": "B"
+  },
+  {
+    "n": 3,
+    "type": "mcq_single",
+    "stem": "The next prime number after 7 is",
+    "options": 4,
+    "correct": "C"
+  },
+  {
+    "n": 4,
+    "type": "mcq_single",
+    "stem": "Express 0.75 as a fraction.",
+    "options": 4,
+    "correct": "C"
+  },
+  {
+    "n": 5,
+    "type": "mcq_single",
+    "stem": "How many sides has a hexagon?",
+    "options": 4,
+    "correct": "B"
+  },
+  {
+    "n": 6,
+    "type": "mcq_single",
+    "stem": "The LCM of 4 and 6 is",
+    "options": 4,
+    "correct": "C"
+  },
+  {
+    "n": 7,
+    "type": "theory",
+    "stem": "Solve the equation 2x + 5 = 17",
+    "marks": 5
+  },
+  {
+    "n": 8,
+    "type": "theory",
+    "stem": "Calculate the percentage profit",
+    "marks": 5
+  },
+  {
+    "n": 9,
+    "type": "theory",
+    "stem": "Define a prime number",
+    "marks": 4
+  }
+]

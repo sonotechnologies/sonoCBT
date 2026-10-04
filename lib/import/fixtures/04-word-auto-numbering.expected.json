@@ -1,0 +1,65 @@
+[
+  {
+    "n": 1,
+    "type": "mcq_single",
+    "stem": "The main source of energy for the earth is the",
+    "options": 4,
+    "correct": "B"
+  },
+  {
+    "n": 2,
+    "type": "mcq_single",
+    "stem": "Which part of a plant absorbs water?",
+    "options": 4,
+    "correct": "C"
+  },
+  {
+    "n": 3,
+    "type": "mcq_single",
+    "stem": "An animal that feeds on both plants and animals is a",
+    "options": 4,
+    "correct": "C"
+  },
+  {
+    "n": 4,
+    "type": "mcq_single",
+    "stem": "Malaria is transmitted by the",
+    "options": 4,
+    "correct": "B"
+  },
+  {
+    "n": 5,
+    "type": "mcq_single",
+    "stem": "Which of these is a renewable resource?",
+    "options": 4,
+    "correct": "C"
+  },
+  {
+    "n": 6,
+    "type": "mcq_single",
+    "stem": "The unit of force is the",
+    "options": 4,
+    "correct": "B"
+  },
+  {
+    "n": 7,
+    "type": "mcq_single",
+    "stem": "Which blood cells fight infection?",
+    "options": 4,
+    "correct": "B"
+  },
+  {
+    "n": 8,
+    "type": "mcq_single",
+    "stem": "Rusting requires air and",
+    "options": 4,
+    "correct": "B"
+  },
+  {
+    "n": 9,
+    "type": "mcq_single",
+    "stem": "The boiling point of pure water is",
+    "options": 4,
+    "correct": "C"
+  }
+]

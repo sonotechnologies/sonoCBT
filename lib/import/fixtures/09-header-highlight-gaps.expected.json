@@ -1,0 +1,55 @@
+[
+  {
+    "n": 1,
+    "type": "mcq_single",
+    "stem": "Which of these is a farm tool?",
+    "options": 4,
+    "correct": "A"
+  },
+  {
+    "n": 2,
+    "type": "mcq_single",
+    "stem": "Which of these animals is kept for eggs?",
+    "options": 4,
+    "correct": "B"
+  },
+  {
+    "n": 3,
+    "type": "mcq_single",
+    "stem": "The best soil for farming is",
+    "options": 4,
+    "correct": "C"
+  },
+  {
+    "n": 4,
+    "type": "mcq_single",
+    "stem": "Which of these is a cash crop?",
+    "options": 4,
+    "correct": "A"
+  },
+  {
+    "n": 5,
+    "type": "mcq_single",
+    "stem": "Planting the same crop year after year on a piece of land leads to",
+    "options": 4,
+    "correct": "B"
+  },
+  {
+    "n": 6,
+    "type": "fill_blank",
+    "stem": "The removal of weeds",
+    "accepted": "weeding"
+  },
+  {
+    "n": 7,
+    "type": "fill_blank",
+    "stem": "A young cow is",
+    "accepted": "calf"
+  },
+  {
+    "n": 8,
+    "type": "fill_blank",
+    "stem": "The practice of growing",
+    "accepted": "mixed"
+  }
+]
