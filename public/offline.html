@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en-NG">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#14213D" />
+    <title>You're offline · SonoCBT</title>
+    <style>
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #faf8f3;
+        color: #14213d;
+        font-family: system-ui, "Segoe UI", Roboto, sans-serif;
+      }
+      main {
+        max-width: 360px;
+        padding: 32px 20px;
+        text-align: center;
+      }
+      .mark {
+        width: 56px;
+        height: 56px;
+        margin: 0 auto 20px;
+        border-radius: 14px;
+        background: #14213d;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .mark span {
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        background: #f2b705;
+      }
+      h1 {
+        font-size: 22px;
+        margin: 0 0 8px;
+      }
+      p {
+        font-size: 15px;
+        line-height: 1.5;
+        color: #3e4760;
+        margin: 0 0 20px;
+      }
+      button {
+        height: 48px;
+        padding: 0 24px;
+        border: 0;
+        border-radius: 10px;
+        background: #14213d;
+        color: #fff;
+        font-size: 15px;
+        font-weight: 700;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="mark"><span></span></div>
+      <h1>You're offline</h1>
+      <p>SonoCBT needs a connection for this screen. Check your data or Wi-Fi, then try again. Exams you have already opened keep working offline.</p>
+      <button type="button" onclick="location.reload()">Try again</button>
+    </main>
+  </body>
+</html>

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Logo } from "@/components/brand/logo";
+import { InstallAppButton } from "@/components/pwa/install";
 import { cn } from "@/lib/utils";
 
 export type NavItem = { label: string; href: string | null; badge?: string };
@@ -83,6 +84,9 @@ export function StaffSidebar({ schoolName, termLabel, userName, userRole, items,
           );
         })}
       </ul>
+      <div className="flex-none px-3 pb-3 empty:hidden">
+        <InstallAppButton tone="ink" />
+      </div>
       <div className="flex flex-none items-center gap-2.5 border-t border-ink-line px-5 py-4">
         <div className="flex size-8 flex-none items-center justify-center rounded-full bg-pencil text-xs font-extrabold text-ink">
           {initialsOf(userName)}

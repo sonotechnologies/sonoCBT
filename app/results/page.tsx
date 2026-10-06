@@ -5,6 +5,7 @@ import { DEFAULT_SCHOOL_COLOR } from "@/components/school-header";
 import { Button } from "@/components/ui/button";
 import { Field, Select } from "@/components/ui/field";
 import { Photo } from "@/components/ui/photo";
+import { InstallAppButton } from "@/components/pwa/install";
 import { listTerms } from "@/lib/data/terms";
 import { getDb } from "@/lib/db";
 import { resultBatch, school as schoolTable } from "@/lib/db/schema";
@@ -56,6 +57,7 @@ async function SchoolChecker({ school }: { school: NonNullable<Awaited<ReturnTyp
         ) : (
           <p className="text-[15px] text-ink-2">This school hasn&apos;t published any results yet.</p>
         )}
+        <InstallAppButton tone="plain" label="Add SonoCBT to your phone's home screen" className="mt-2 self-start text-sm" />
       </div>
     </main>
   );

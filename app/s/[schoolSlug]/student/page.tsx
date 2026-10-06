@@ -3,6 +3,7 @@ import { DemoBanner } from "@/components/demo/banner";
 import { getBilling } from "@/lib/billing/context";
 import { hasFeature } from "@/lib/billing/state";
 import Link from "next/link";
+import { InstallAppButton } from "@/components/pwa/install";
 import { OpensLabel } from "@/components/exam/opens-label";
 import { buttonVariants } from "@/components/ui/button";
 import { Photo } from "@/components/ui/photo";
@@ -153,6 +154,7 @@ export default async function StudentHomePage({ params }: PageProps<"/s/[schoolS
         ) : (
           <p className="text-sm text-muted-foreground">Your scores appear here once your teachers release them.</p>
         )}
+        <InstallAppButton className="mt-3 self-start" />
       </div>
     </main>
   );

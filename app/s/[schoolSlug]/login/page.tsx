@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { Logo } from "@/components/brand/logo";
+import { InstallAppButton } from "@/components/pwa/install";
 import { SchoolBrandHeader } from "@/components/school-header";
+import { RememberSchool } from "@/app/start/student-choice";
 import { getSchoolBySlug, getTenantContext } from "@/lib/tenant/context";
 import { StudentSignInForm } from "./student-sign-in-form";
 
@@ -30,6 +32,8 @@ export default async function StudentLoginPage({ params }: PageProps<"/s/[school
           </div>
           <StudentSignInForm schoolSlug={schoolSlug} />
           <p className="text-sm text-muted-foreground">Forgot your password? Ask your form teacher to reset it.</p>
+          <InstallAppButton label="Install the app on this phone" className="self-start" />
+          <RememberSchool slug={school.slug} name={school.name} />
         </div>
       </div>
       <footer className="flex items-center justify-between border-t border-border px-5 py-3.5 text-xs text-muted-foreground sm:px-7">

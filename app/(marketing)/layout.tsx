@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { InstallAppButton } from "@/components/pwa/install";
 import { Logo } from "@/components/brand/logo";
 import { MarketingNav } from "@/components/marketing/nav";
 import { SITE } from "@/lib/site";
@@ -15,6 +16,7 @@ export default function MarketingLayout({ children }: LayoutProps<"/">) {
             A {SITE.company} product · {SITE.city}
           </span>
           <span className="flex-1" />
+          <InstallAppButton tone="plain" label="Get the app" className="h-auto text-sm" />
           <Link href="/results">Check a result</Link>
           <Link href="/verify">Verify a report card</Link>
           <Link href="/contact">Contact</Link>

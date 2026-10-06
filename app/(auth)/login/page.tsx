@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { InstallAppButton } from "@/components/pwa/install";
 import { Logo } from "@/components/brand/logo";
 import { StaffSignInForm } from "./staff-sign-in-form";
 
@@ -22,6 +23,7 @@ export default async function StaffLoginPage({ searchParams }: PageProps<"/login
         )}
         <StaffSignInForm />
       </div>
+      <InstallAppButton className="mx-auto mt-4" />
       <p className="mt-6 text-center text-sm text-muted-foreground">
         Student? Use the sign-in link from your school.
         <br />
