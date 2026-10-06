@@ -88,6 +88,8 @@ export function MonitorClient({ slug, initial }: { slug: string; initial: Data }
   }, [refresh, offset]);
 
   const cur = data.students.find((s) => s.studentId === sel) ?? null;
+  // Phones and tablets show the selected student as a full-screen sheet, opened by a tap.
+  const [sheet, setSheet] = useState(false);
   const curKey = cur ? `${cur.studentId}:${cur.flags}:${cur.status}:${cur.extraMinutes}:${cur.lateCount}` : "";
   useEffect(() => {
     if (!sel) return;
@@ -121,7 +123,7 @@ export function MonitorClient({ slug, initial }: { slug: string; initial: Data }
 
   return (
     <div className="flex min-h-0 min-w-0 flex-1 flex-col">
-      <header className="flex flex-none flex-wrap items-center gap-4 border-b border-border bg-card px-4 py-[18px] lg:px-7">
+      <header className="flex flex-none flex-wrap items-center gap-x-4 gap-y-3 border-b border-border bg-card px-4 py-4 lg:px-7 lg:py-[18px]">
         {live ? (
           <span className="flex h-[26px] items-center gap-1.5 rounded-full bg-pencil px-2.5 text-xs font-extrabold text-ink">
             <span className="size-[7px] rounded-full bg-ink" />
@@ -155,20 +157,20 @@ export function MonitorClient({ slug, initial }: { slug: string; initial: Data }
 
       <div className="flex min-h-0 flex-1 flex-col xl:flex-row">
         <main className="flex min-w-0 flex-1 flex-col gap-[18px] overflow-auto px-4 pt-5 pb-8 lg:px-7">
-          <div className="grid grid-cols-[repeat(auto-fit,minmax(130px,1fr))] gap-2.5">
+          <div className="grid grid-cols-3 gap-2 sm:grid-cols-[repeat(auto-fit,minmax(130px,1fr))] sm:gap-2.5">
             {(["progress", "notstarted", "submitted", "offline", "flagged"] as const).map((k) => (
               <button
                 key={k}
                 type="button"
                 aria-pressed={filter === k}
                 onClick={() => setFilter(filter === k ? null : k)}
-                className={cn("rounded-[10px] bg-card px-3.5 py-3 text-left", filter === k ? "border-2 border-ink" : "border border-border")}
+                className={cn("min-w-0 rounded-[10px] bg-card px-2.5 py-2.5 text-left sm:px-3.5 sm:py-3", filter === k ? "border-2 border-ink" : "border border-border")}
               >
-                <div className="flex items-center gap-2 text-[13px] text-ink-2">
+                <div className="flex items-center gap-1.5 truncate text-xs text-ink-2 sm:gap-2 sm:text-[13px]">
                   <Shape k={k} />
                   {KIND[k].label}
                 </div>
-                <div className="mt-1 font-mono text-[26px] font-semibold">{data.counts[k]}</div>
+                <div className="mt-0.5 font-mono text-[22px] font-semibold sm:mt-1 sm:text-[26px]">{data.counts[k]}</div>
               </button>
             ))}
           </div>
@@ -178,7 +180,7 @@ export function MonitorClient({ slug, initial }: { slug: string; initial: Data }
               onChange={(ev) => setQ(ev.target.value)}
               placeholder="Search name or admission no."
               aria-label="Search students"
-              className="h-10 w-[280px] max-w-full rounded-md border-[1.5px] border-input bg-card px-3 text-sm"
+              className="h-11 w-full rounded-md border-[1.5px] border-input bg-card px-3 text-sm sm:h-10 sm:w-[280px]"
             />
             <span className="text-[13px] text-muted-foreground">
               Showing <strong className="text-foreground">{filter ? KIND[filter].label.toLowerCase() : "everyone"}</strong> · {shown.length} students
@@ -189,7 +191,7 @@ export function MonitorClient({ slug, initial }: { slug: string; initial: Data }
               </button>
             )}
           </div>
-          <ul className="grid grid-cols-[repeat(auto-fill,minmax(180px,1fr))] gap-2.5" aria-label="Students">
+          <ul className="grid grid-cols-1 gap-2 min-[420px]:grid-cols-2 sm:grid-cols-[repeat(auto-fill,minmax(180px,1fr))] sm:gap-2.5" aria-label="Students">
             {shown.map((s) => {
               const k = KIND[s.status];
               const isSel = s.studentId === sel;
@@ -199,6 +201,7 @@ export function MonitorClient({ slug, initial }: { slug: string; initial: Data }
                     type="button"
                     onClick={() => {
                       setSel(s.studentId);
+                      setSheet(true);
                       setNote(null);
                       setConfirm(null);
                     }}
@@ -230,7 +233,10 @@ export function MonitorClient({ slug, initial }: { slug: string; initial: Data }
         </main>
 
         {cur && (
-          <aside aria-label={`${cur.name}`} className="flex w-full flex-none flex-col border-t border-border bg-card xl:w-[360px] xl:overflow-auto xl:border-t-0 xl:border-l">
+          <aside aria-label={`${cur.name}`} className={cn("w-full flex-none flex-col bg-card xl:static xl:z-auto xl:flex xl:w-[360px] xl:overflow-auto xl:border-l xl:border-border", sheet ? "fixed inset-0 z-40 flex overflow-auto" : "hidden")}>
+            <button type="button" onClick={() => setSheet(false)} className="flex h-12 flex-none items-center gap-1.5 border-b border-divider px-4 text-left text-sm font-semibold text-ink-2 xl:hidden">
+              ← Back to all students
+            </button>
             <div className="flex items-center gap-3.5 border-b border-divider px-[22px] py-5">
               {cur.photoUrl ? (
                 // eslint-disable-next-line @next/next/no-img-element

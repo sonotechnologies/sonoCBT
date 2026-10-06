@@ -40,7 +40,7 @@ function SubjectGroup({
             <button
               type="button"
               onClick={() => onRemove(s.name)}
-              className="flex size-7 items-center justify-center rounded-full text-muted-foreground hover:bg-secondary hover:text-foreground"
+              className="-my-1.5 -mr-2 flex size-10 items-center justify-center rounded-full sm:my-0 sm:mr-0 sm:size-7 text-muted-foreground hover:bg-secondary hover:text-foreground"
               aria-label={`Remove ${s.name} from ${label}`}
             >
               ×

@@ -34,7 +34,7 @@ export default async function PlatformHome() {
         ))}
       </dl>
       <div className="overflow-x-auto rounded-xl border border-border bg-card">
-        <table className="w-full text-sm">
+        <table className="stack-table w-full text-sm">
           <thead className="bg-secondary text-left text-xs text-ink-2">
             <tr>
               <th className="px-4 py-2.5">School</th>
@@ -57,15 +57,15 @@ export default async function PlatformHome() {
                     {[s.locality, s.slug, s.isDemo ? "demo" : null].filter(Boolean).join(" · ")}
                   </div>
                 </td>
-                <td className="px-3 py-3">
+                <td data-label="Status" className="px-3 py-3">
                   <span className={cn("rounded-full px-2.5 py-1 text-xs font-bold", STATUS_CHIP[s.status].cls)}>{STATUS_CHIP[s.status].label}</span>
                   {s.status === "trial" && s.trialEndsAt && <div className="mt-1 text-xs text-muted-foreground">ends {formatDate(s.trialEndsAt)}</div>}
                 </td>
-                <td className="px-3 py-3">{s.paidPlan ? planByCode(s.paidPlan).name : s.plan ? `${planByCode(s.plan).name} (unpaid)` : "—"}</td>
-                <td className="px-3 py-3 text-right font-mono">{s.students}</td>
-                <td className="px-3 py-3 text-right font-mono">{s.staff}</td>
-                <td className="px-3 py-3 font-mono text-[13px]">{s.lastActive ? formatDate(s.lastActive) : "—"}</td>
-                <td className="px-4 py-3 text-right font-mono">{naira(s.paidTotal)}</td>
+                <td data-label="Plan" className="px-3 py-3">{s.paidPlan ? planByCode(s.paidPlan).name : s.plan ? `${planByCode(s.plan).name} (unpaid)` : "—"}</td>
+                <td data-label="Students" className="px-3 py-3 text-right font-mono">{s.students}</td>
+                <td data-label="Staff" className="px-3 py-3 text-right font-mono">{s.staff}</td>
+                <td data-label="Last active" className="px-3 py-3 font-mono text-[13px]">{s.lastActive ? formatDate(s.lastActive) : "—"}</td>
+                <td data-label="Paid to date" className="px-4 py-3 text-right font-mono">{naira(s.paidTotal)}</td>
               </tr>
             ))}
           </tbody>

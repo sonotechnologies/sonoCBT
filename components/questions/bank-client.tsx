@@ -34,6 +34,7 @@ export function BankFilters({
   topics: { id: string; name: string }[];
   values: Record<string, string>;
 }) {
+  const [open, setOpen] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
   const sp = useSearchParams();
@@ -48,14 +49,15 @@ export function BankFilters({
   };
   const sel = (on: boolean) =>
     cn(
-      "h-10 rounded-md border-[1.5px] px-2.5 text-[13px] font-semibold",
+      "h-11 min-w-0 rounded-md border-[1.5px] px-2.5 text-[13px] font-semibold sm:h-10",
       on ? "border-ink bg-ink text-white" : "border-input bg-card text-foreground",
     );
+  const active = [values.class, values.subject, values.topic, values.type, values.difficulty, values.status].filter(Boolean).length;
   return (
     <div className="flex flex-wrap items-center gap-2.5 border-b border-border px-4 py-3.5 lg:px-8">
       <form
         role="search"
-        className="flex h-10 min-w-[200px] flex-1 items-center gap-2 rounded-md border-[1.5px] border-input bg-card px-3 text-sm sm:max-w-[360px]"
+        className="flex h-11 min-w-0 flex-1 sm:h-10 sm:min-w-[200px] items-center gap-2 rounded-md border-[1.5px] border-input bg-card px-3 text-sm sm:max-w-[360px]"
         onSubmit={(e) => {
           e.preventDefault();
           update("q", String(new FormData(e.currentTarget).get("q") ?? ""));
@@ -67,6 +69,10 @@ export function BankFilters({
         </svg>
         <input name="q" defaultValue={values.q} placeholder="Search questions" aria-label="Search questions" className="min-w-0 flex-1 bg-transparent focus:outline-none" />
       </form>
+      <button type="button" onClick={() => setOpen((o) => !o)} aria-expanded={open} className={cn("h-11 rounded-md border-[1.5px] px-3.5 text-sm font-semibold sm:hidden", active ? "border-ink bg-ink text-white" : "border-input bg-card")}>
+        Filters{active ? ` · ${active}` : ""}
+      </button>
+      <div className={cn("w-full grid-cols-2 gap-2 sm:contents", open ? "grid" : "hidden")}>
       <select aria-label="Class" value={values.class ?? ""} onChange={(e) => update("class", e.target.value)} className={sel(!!values.class)}>
         <option value="">All classes</option>
         {levels.map((l) => (
@@ -114,6 +120,7 @@ export function BankFilters({
         <option value="draft">My drafts</option>
         <option value="archived">Archived</option>
       </select>
+      </div>
     </div>
   );
 }
@@ -189,7 +196,7 @@ export function BankTable({
               onChange={(e) => setTopicDraft(e.target.value)}
               placeholder="Topic"
               aria-label="Set topic for selected"
-              className="h-9 w-32 rounded-md border-[1.5px] border-input bg-card px-2 text-[13px]"
+              className="h-10 w-32 rounded-md border-[1.5px] border-input bg-card px-2 text-[13px]"
             />
             <Button
               size="md"
@@ -241,8 +248,8 @@ export function BankTable({
         </p>
       )}
       <div className="relative min-h-0 flex-1 overflow-auto">
-        <table className="w-full min-w-[760px] border-collapse text-sm">
-          <thead className="sticky top-0 z-10 bg-secondary text-left text-xs font-bold text-ink-2">
+        <table className="w-full border-collapse text-sm max-sm:block sm:min-w-[760px]">
+          <thead className="sticky top-0 z-10 bg-secondary max-sm:hidden text-left text-xs font-bold text-ink-2">
             <tr className="h-10 border-b border-border">
               <th className="w-10 pl-4 lg:pl-8">
                 <input
@@ -262,15 +269,15 @@ export function BankTable({
               <th className="w-[52px] pr-4 text-right lg:pr-8">Used</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="max-sm:block">
             {rows.map((r) => {
               const on = r.id === selectedId;
               return (
                 <tr
                   key={r.id}
-                  className={cn("h-14 border-b border-divider", on ? "bg-[#FFF8E1] shadow-[inset_4px_0_0_#F2B705]" : "bg-card hover:bg-background")}
+                  className={cn("relative h-14 border-b border-divider max-sm:flex max-sm:h-auto max-sm:flex-wrap max-sm:items-center max-sm:gap-x-2.5 max-sm:gap-y-1.5 max-sm:py-3 max-sm:pr-4 max-sm:pl-[50px]", on ? "bg-[#FFF8E1] shadow-[inset_4px_0_0_#F2B705]" : "bg-card hover:bg-background")}
                 >
-                  <td className="pl-4 lg:pl-8">
+                  <td className="relative z-[1] pl-4 max-sm:absolute max-sm:top-3 max-sm:left-4 max-sm:p-0 lg:pl-8">
                     <input
                       type="checkbox"
                       aria-label={`Select ${r.code}`}
@@ -286,23 +293,23 @@ export function BankTable({
                       className="size-4 accent-[#14213D]"
                     />
                   </td>
-                  <td className="px-2 font-mono text-xs text-muted-foreground">{r.code}</td>
-                  <td className="max-w-0 px-2">
-                    <Link href={href(r.id)} scroll={false} className="block truncate font-semibold no-underline hover:underline" aria-current={on ? "true" : undefined}>
+                  <td className="px-2 font-mono text-xs text-muted-foreground max-sm:order-2 max-sm:px-0">{r.code}</td>
+                  <td className="max-w-0 px-2 max-sm:order-1 max-sm:w-full max-sm:max-w-none max-sm:px-0">
+                    <Link href={href(r.id)} scroll={false} className="block truncate font-semibold no-underline after:absolute after:inset-0 hover:underline max-sm:line-clamp-2 max-sm:whitespace-normal sm:after:hidden" aria-current={on ? "true" : undefined}>
                       {plainText(r.text) || "(image only)"}
                     </Link>
                   </td>
-                  <td className="truncate px-2 text-[13px] text-ink-2">{r.topic ?? "—"}</td>
-                  <td className="px-2 text-xs font-semibold">
+                  <td className="truncate px-2 text-[13px] text-ink-2 max-sm:order-2 max-sm:px-0">{r.topic ?? "—"}</td>
+                  <td className="px-2 text-xs font-semibold max-sm:order-3 max-sm:px-0">
                     <span className="rounded-full bg-chip px-2 py-[3px]">{TYPE_LABEL[r.type]}</span>
                   </td>
-                  <td className="px-2">
+                  <td className="px-2 max-sm:order-3 max-sm:px-0">
                     <Difficulty level={r.difficulty} />
                   </td>
-                  <td className="px-2">
+                  <td className="px-2 max-sm:order-3 max-sm:px-0">
                     <span className={cn("rounded-full px-2 py-[3px] text-xs font-semibold", STATUS_STYLE[r.status])}>{STATUS_LABEL[r.status]}</span>
                   </td>
-                  <td className="pr-4 text-right font-mono text-[13px] lg:pr-8">{r.timesUsed}</td>
+                  <td className="pr-4 text-right font-mono text-[13px] max-sm:hidden lg:pr-8">{r.timesUsed}</td>
                 </tr>
               );
             })}

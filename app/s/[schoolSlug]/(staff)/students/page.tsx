@@ -39,7 +39,7 @@ export default async function StudentsPage({ params, searchParams }: PageProps<"
   return (
     <main className="flex min-w-0 flex-col gap-5 p-4 lg:p-8">
       <div className="flex flex-wrap items-end gap-3">
-        <div className="flex-1">
+        <div className="w-full sm:w-auto sm:flex-1">
           <h1 className="text-[28px] font-extrabold">Students</h1>
           <p className="text-sm text-ink-2">
             {rows.length === 500 ? "Showing the first 500 — search or pick a class to narrow down." : `${rows.length} shown`}
@@ -60,7 +60,7 @@ export default async function StudentsPage({ params, searchParams }: PageProps<"
       {isAdmin && (
         <nav aria-label="Student status" className="flex gap-1">
           {STATUS_TABS.map(([k, label]) => (
-            <Link key={k} href={k === "active" ? "?" : `?status=${k}`} aria-current={status === k ? "page" : undefined} className={cn("rounded-md px-3 py-2 text-sm font-semibold text-foreground no-underline", status === k ? "bg-ink text-white" : "bg-card")}>
+            <Link key={k} href={k === "active" ? "?" : `?status=${k}`} aria-current={status === k ? "page" : undefined} className={cn("flex h-10 items-center rounded-md px-3 text-sm font-semibold text-foreground no-underline", status === k ? "bg-ink text-white" : "bg-card")}>
               {label}
             </Link>
           ))}
@@ -74,13 +74,13 @@ export default async function StudentsPage({ params, searchParams }: PageProps<"
           defaultValue={q}
           placeholder="Search name or admission no."
           aria-label="Search students"
-          className="h-11 min-w-0 flex-1 rounded-md border-[1.5px] border-input bg-card px-3 text-sm sm:max-w-xs"
+          className="h-11 w-full min-w-0 rounded-md border-[1.5px] border-input bg-card px-3 text-sm sm:w-auto sm:flex-1 sm:max-w-xs"
         />
         <select
           name="class"
           defaultValue={classFilter ?? ""}
           aria-label="Class"
-          className="h-11 rounded-md border-[1.5px] border-input bg-card px-2 text-sm"
+          className="h-11 min-w-0 flex-1 rounded-md border-[1.5px] border-input bg-card px-2 text-sm sm:flex-none"
         >
           {isAdmin && <option value="">All classes</option>}
           {arms.map((a) => (
@@ -96,7 +96,7 @@ export default async function StudentsPage({ params, searchParams }: PageProps<"
 
       {rows.length ? (
         <div className="relative overflow-x-auto rounded-lg border border-border bg-card">
-          <table className="w-full min-w-[720px] text-sm">
+          <table className="stack-table w-full min-w-[720px] text-sm">
             <thead>
               <tr className="h-10 bg-secondary text-left text-xs font-bold text-ink-2">
                 <th className="px-4">Name</th>
@@ -113,14 +113,14 @@ export default async function StudentsPage({ params, searchParams }: PageProps<"
               {rows.map((r) => (
                 <tr key={r.id} className="h-12 border-t border-divider">
                   <td className="px-4 font-semibold">{r.name}</td>
-                  <td className="px-2 font-mono text-[13px]">{r.admissionNo}</td>
-                  <td className="px-2">{r.className ?? "—"}</td>
-                  <td className="px-2 font-mono text-[13px]">{r.guardianPhone ?? "—"}</td>
-                  <td className="px-2 text-[13px] text-muted-foreground">
+                  <td data-label="Adm." className="px-2 font-mono text-[13px]">{r.admissionNo}</td>
+                  <td data-label="Class" className="px-2">{r.className ?? "—"}</td>
+                  <td data-label="Guardian" className="px-2 font-mono text-[13px]">{r.guardianPhone ?? "—"}</td>
+                  <td data-cell="full" className="px-2 text-[13px] text-muted-foreground">
                     {r.status === "active" ? (r.pendingFirstSignIn ? "Starting password" : "Own password") : [r.leftOn ? r.leftOn.split("-").reverse().join("/") : null, r.leftReason].filter(Boolean).join(" · ")}
                   </td>
-                  <td className="px-4">
-                    <span className="flex justify-end gap-2">
+                  <td data-cell="full" className="px-4">
+                    <span className="flex flex-wrap justify-end gap-2">
                       {r.status === "active" && <ResetPasswordButton slug={schoolSlug} studentId={r.id} name={r.name} />}
                       {isAdmin && <StudentMoves slug={schoolSlug} student={{ id: r.id, name: r.name, classArmId: r.classArmId, status: r.status }} arms={arms.map((a) => ({ id: a.id, name: a.name }))} />}
                     </span>

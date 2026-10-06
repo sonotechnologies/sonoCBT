@@ -47,13 +47,13 @@ export default async function DemoPage({ searchParams }: PageProps<"/demo">) {
               type="submit"
               disabled={!on}
               aria-label={`Enter as ${r.label}`}
-              className="flex w-full flex-col gap-3 rounded-xl border border-border bg-card p-5 text-left transition hover:border-ink hover:shadow-[0_4px_12px_rgba(20,33,61,.08)] disabled:opacity-60"
+              className="grid w-full grid-cols-[40px_1fr] items-start gap-x-3.5 gap-y-1.5 rounded-xl border border-border bg-card p-4 text-left sm:flex sm:flex-col sm:gap-3 sm:p-5 transition hover:border-ink hover:shadow-[0_4px_12px_rgba(20,33,61,.08)] disabled:opacity-60"
             >
-              <span className="flex size-11 items-center justify-center rounded-full bg-ink text-lg font-extrabold text-white" aria-hidden>
+              <span className="row-span-4 flex size-10 items-center justify-center rounded-full bg-ink text-base font-extrabold text-white sm:size-11 sm:text-lg" aria-hidden>
                 {r.initial}
               </span>
-              <span className="text-lg font-extrabold">{r.label}</span>
-              <span className="flex-1 text-sm leading-relaxed text-ink-2">{r.body}</span>
+              <span className="text-[17px] leading-tight font-extrabold sm:text-lg">{r.label}</span>
+              <span className="flex-1 text-sm leading-snug text-ink-2 sm:leading-relaxed">{r.body}</span>
               <span className="text-xs text-muted-foreground">
                 Signed in as <strong className="text-foreground">{r.who}</strong>
               </span>

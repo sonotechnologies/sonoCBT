@@ -175,7 +175,7 @@ export function ExamReportView({ r, csv }: { r: ExamReport; csv: (table: string)
 
       <Card title="Every question" sub="% correct counts a skipped question as missed. Time is the median gap since the student's previous answer." flush>
         <div className="overflow-x-auto">
-          <table className="w-full text-sm">
+          <table className="stack-table w-full text-sm">
             <thead className="bg-secondary text-left text-xs text-ink-2">
               <tr>
                 <th className="px-4 py-2.5">Q</th>
@@ -190,15 +190,15 @@ export function ExamReportView({ r, csv }: { r: ExamReport; csv: (table: string)
             <tbody>
               {r.questions.map((q) => (
                 <tr key={q.id} className="border-t border-divider">
-                  <td className="px-4 py-2 font-mono font-bold">{q.number}</td>
-                  <td className="max-w-[360px] px-2 py-2">
-                    <div className="rich truncate [&_p]:inline" dangerouslySetInnerHTML={{ __html: q.html }} />
+                  <td data-cell="inline" data-label="Q" className="px-4 py-2 font-mono font-bold">{q.number}</td>
+                  <td data-cell="full" className="max-w-[360px] px-2 py-2 max-sm:order-first">
+                    <div className="rich truncate max-sm:whitespace-normal [&_p]:inline" dangerouslySetInnerHTML={{ __html: q.html }} />
                   </td>
-                  <td className="px-2 py-2 text-ink-2">{q.topic}</td>
-                  <td className={cn("px-2 py-2 text-right font-mono", q.pctCorrect < 40 && "font-bold text-[#A1271F]")}>{num(q.pctCorrect)}%</td>
-                  <td className="px-2 py-2 font-mono text-[13px]">{q.wrong ? `${q.wrong.letter} · ${num(q.wrong.picked)}%` : "—"}</td>
-                  <td className="px-2 py-2 text-right font-mono">{num(q.skipped)}%</td>
-                  <td className="px-4 py-2 text-right font-mono">{secs(q.medianSeconds)}</td>
+                  <td data-label="Topic" className="px-2 py-2 text-ink-2">{q.topic}</td>
+                  <td data-label="Correct" className={cn("px-2 py-2 text-right font-mono", q.pctCorrect < 40 && "font-bold text-[#A1271F]")}>{num(q.pctCorrect)}%</td>
+                  <td data-label="Most-picked wrong" className="px-2 py-2 font-mono text-[13px]">{q.wrong ? `${q.wrong.letter} · ${num(q.wrong.picked)}%` : "—"}</td>
+                  <td data-label="Skipped" className="px-2 py-2 text-right font-mono">{num(q.skipped)}%</td>
+                  <td data-label="Time" className="px-4 py-2 text-right font-mono">{secs(q.medianSeconds)}</td>
                 </tr>
               ))}
             </tbody>

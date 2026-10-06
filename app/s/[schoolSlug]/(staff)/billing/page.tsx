@@ -116,7 +116,7 @@ export default async function BillingPage({ params, searchParams }: PageProps<"/
             Payments
           </h2>
           {history.length ? (
-            <table className="w-full overflow-hidden rounded-xl border border-border bg-card text-sm">
+            <table className="stack-table w-full overflow-hidden rounded-xl border border-border bg-card text-sm">
               <thead className="bg-secondary text-left text-xs text-ink-2">
                 <tr>
                   <th className="px-4 py-2.5">Date</th>
@@ -131,11 +131,11 @@ export default async function BillingPage({ params, searchParams }: PageProps<"/
                 {history.map((h) => (
                   <tr key={h.id} className="border-t border-divider">
                     <td className="px-4 py-2.5 font-mono text-[13px]">{formatDate(h.paidAt ?? h.createdAt)}</td>
-                    <td className="px-4 py-2.5">{planByCode(h.plan).name}</td>
-                    <td className="px-4 py-2.5 text-right font-mono">{h.studentCount}</td>
-                    <td className="px-4 py-2.5 text-right font-mono">{naira(h.amount)}</td>
-                    <td className="px-4 py-2.5">{h.status === "paid" ? "✓ Paid" : h.status === "failed" ? "✕ Failed" : "Not completed"}</td>
-                    <td className="px-4 py-2.5 font-mono text-xs">{h.reference}</td>
+                    <td data-label="Plan" className="px-4 py-2.5">{planByCode(h.plan).name}</td>
+                    <td data-label="Students" className="px-4 py-2.5 text-right font-mono">{h.studentCount}</td>
+                    <td data-label="Amount" className="px-4 py-2.5 text-right font-mono">{naira(h.amount)}</td>
+                    <td data-label="Status" className="px-4 py-2.5">{h.status === "paid" ? "✓ Paid" : h.status === "failed" ? "✕ Failed" : "Not completed"}</td>
+                    <td data-label="Reference" className="px-4 py-2.5 font-mono text-xs">{h.reference}</td>
                   </tr>
                 ))}
               </tbody>

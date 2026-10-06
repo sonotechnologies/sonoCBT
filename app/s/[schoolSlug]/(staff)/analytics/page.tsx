@@ -105,15 +105,15 @@ export default async function AnalyticsPage({ params, searchParams }: PageProps<
             <div className="text-[13px] font-semibold text-muted-foreground">Analytics{access.schoolWide ? "" : " · your subjects"}</div>
             <h1 className="mt-0.5 text-2xl font-extrabold">{title}</h1>
           </div>
-          <div className="flex flex-wrap items-center gap-3">{pickers}</div>
+          <div className="flex w-full flex-wrap items-center gap-3 sm:w-auto">{pickers}</div>
         </div>
-        <nav aria-label="Analytics" className="mt-3.5 flex gap-1">
+        <nav aria-label="Analytics" className="chip-row mt-3.5 flex gap-1">
           {tabs.map(([k, label]) => (
             <Link
               key={k}
               href={`${base}?tab=${k}${term && k !== "exam" ? `&term=${term.id}` : ""}`}
               aria-current={k === tab ? "page" : undefined}
-              className={cn("flex h-11 items-center px-4 text-sm text-foreground no-underline", k === tab ? "font-extrabold shadow-[inset_0_-3px_0_var(--color-ink)]" : "font-semibold")}
+              className={cn("flex h-11 items-center px-3 text-sm whitespace-nowrap text-foreground no-underline sm:px-4", k === tab ? "font-extrabold shadow-[inset_0_-3px_0_var(--color-ink)]" : "font-semibold")}
             >
               {label}
             </Link>

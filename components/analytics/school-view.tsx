@@ -133,7 +133,7 @@ export function SchoolView({ o, csv }: { o: Overview; csv: (table: string) => st
       <Card title="Students at risk" sub={`Average below ${AT_RISK_BELOW}%, or down ${AT_RISK_DROP} points or more since last term`} flush action={<CsvLink href={csv("at-risk")} />}>
         {o.atRisk.length ? (
           <div className="overflow-x-auto">
-            <table className="w-full text-sm">
+            <table className="stack-table w-full text-sm">
               <thead className="bg-secondary text-left text-xs text-ink-2">
                 <tr>
                   <th className="px-[22px] py-2.5">Student</th>
@@ -151,12 +151,12 @@ export function SchoolView({ o, csv }: { o: Overview; csv: (table: string) => st
                     <td className="px-[22px] py-2">
                       <span className="font-semibold">{s.name}</span> <span className="font-mono text-xs text-muted-foreground">{s.admissionNo}</span>
                     </td>
-                    <td className="px-2 py-2">{s.arm}</td>
-                    <td className="px-2 py-2 text-right font-mono">{num(s.average)}%</td>
-                    <td className="px-2 py-2 text-right font-mono">{s.previous === null ? "—" : `${num(s.previous)}%`}</td>
-                    <td className="px-2 py-2 text-right font-mono text-[#A1271F]">{signed(s.change)}</td>
-                    <td className="px-2 py-2">{s.weakest}</td>
-                    <td className="px-[22px] py-2">{s.reason === "below" ? `Below ${AT_RISK_BELOW}%` : "Dropping"}</td>
+                    <td data-label="Class" className="px-2 py-2">{s.arm}</td>
+                    <td data-label="Average" className="px-2 py-2 text-right font-mono">{num(s.average)}%</td>
+                    <td data-label="Last term" className="px-2 py-2 text-right font-mono">{s.previous === null ? "—" : `${num(s.previous)}%`}</td>
+                    <td data-label="Change" className="px-2 py-2 text-right font-mono text-[#A1271F]">{signed(s.change)}</td>
+                    <td data-label="Weakest subject" className="px-2 py-2">{s.weakest}</td>
+                    <td data-label="Why" className="px-[22px] py-2">{s.reason === "below" ? `Below ${AT_RISK_BELOW}%` : "Dropping"}</td>
                   </tr>
                 ))}
               </tbody>

@@ -1,5 +1,4 @@
 import { redirect } from "next/navigation";
-import { Logo } from "@/components/brand/logo";
 import { BillingBanner } from "@/components/billing/banner";
 import { DemoBanner } from "@/components/demo/banner";
 import { getBilling } from "@/lib/billing/context";
@@ -45,23 +44,24 @@ export default async function StaffLayout({ children, params }: LayoutProps<"/s/
   ];
   const primaryRole = ctx.actor.roles.find((r) => STAFF_ROLES.has(r.role))?.role;
   const signOutAction = signOut.bind(null, "/login");
+  const sidebar = {
+    schoolName: ctx.school.name,
+    termLabel: current ? termLabel(current.number, current.sessionName, " · ") : "No term set",
+    userName: ctx.user.name,
+    userRole: primaryRole ? ROLE_LABEL[primaryRole] : "Staff",
+    items,
+  };
 
   return (
     <div className="flex min-h-dvh min-w-0 flex-1">
       <div className="sticky top-0 hidden h-dvh flex-none lg:block print:hidden">
-        <StaffSidebar
-          schoolName={ctx.school.name}
-          termLabel={current ? termLabel(current.number, current.sessionName, " · ") : "No term set"}
-          userName={ctx.user.name}
-          userRole={primaryRole ? ROLE_LABEL[primaryRole] : "Staff"}
-          items={items}
-        />
+        <StaffSidebar {...sidebar} />
       </div>
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="flex h-14 items-center justify-between gap-3 border-b border-border bg-card px-4 lg:px-8 print:hidden">
-          <span className="flex items-center gap-3 lg:hidden">
-            <MobileNav items={items} />
-            <Logo size={20} />
+        <header className="sticky top-0 z-30 flex h-14 items-center justify-between gap-2 border-b border-border bg-card px-4 lg:static lg:px-8 print:hidden">
+          <span className="flex min-w-0 items-center gap-2 lg:hidden">
+            <MobileNav {...sidebar} />
+            <span className="truncate text-sm font-bold">{ctx.school.name}</span>
           </span>
           <span className="hidden text-sm font-semibold text-ink-2 lg:block">{ctx.school.name}</span>
           <form action={signOutAction}>

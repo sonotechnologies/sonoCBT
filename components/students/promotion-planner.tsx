@@ -77,7 +77,7 @@ export function PromotionPlanner({ slug, plan, sessionName, alreadyPromoted }: {
   return (
     <div className="flex flex-col gap-4">
       <div className="overflow-hidden rounded-xl border border-border bg-card">
-        <table className="w-full text-sm">
+        <table className="stack-table w-full text-sm">
           <thead className="bg-secondary text-left text-xs text-ink-2">
             <tr>
               <th className="px-4 py-2.5">This session&apos;s class</th>
@@ -93,12 +93,12 @@ export function PromotionPlanner({ slug, plan, sessionName, alreadyPromoted }: {
               const exceptions = c.students.filter((s) => students[s.id]).length;
               return (
                 <tr key={c.id} className="border-t border-divider align-top">
-                  <td className="px-4 py-3 font-bold">
+                  <td data-cell="inline" className="px-4 py-3 font-bold">
                     {c.name}
                     {c.check && <div className="mt-0.5 text-xs font-semibold text-[#8A430B]">Check: there&apos;s no matching class a level up</div>}
                   </td>
-                  <td className="px-2 py-3 text-right font-mono">{c.students.length}</td>
-                  <td className="px-4 py-2">
+                  <td data-label="Students" className="px-2 py-3 text-right font-mono">{c.students.length}</td>
+                  <td data-cell="full" className="px-4 py-2">
                     <TargetSelect value={classes[c.id]} onChange={(v) => setClasses((x) => ({ ...x, [c.id]: v }))} arms={plan.arms} label={`${c.name} goes to`} />
                     {openClass === c.id && (
                       <ul className="mt-3 flex flex-col gap-2" aria-label={`${c.name} students`}>
@@ -113,8 +113,8 @@ export function PromotionPlanner({ slug, plan, sessionName, alreadyPromoted }: {
                       </ul>
                     )}
                   </td>
-                  <td className="px-4 py-3 text-right">
-                    <button type="button" onClick={() => setOpenClass(openClass === c.id ? null : c.id)} className="text-[13px] font-bold whitespace-nowrap underline">
+                  <td data-cell="full" className="px-4 py-3 text-right">
+                    <button type="button" onClick={() => setOpenClass(openClass === c.id ? null : c.id)} className="h-10 text-[13px] font-bold whitespace-nowrap underline sm:h-auto">
                       {openClass === c.id ? "Done" : exceptions ? `${exceptions} ${exceptions === 1 ? "exception" : "exceptions"}` : "Exceptions…"}
                     </button>
                   </td>

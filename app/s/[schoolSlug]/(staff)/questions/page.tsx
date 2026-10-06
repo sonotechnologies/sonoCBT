@@ -65,7 +65,7 @@ export default async function QuestionBankPage({ params, searchParams }: PagePro
   return (
     <main className="flex min-h-0 min-w-0 flex-1 flex-col">
       <div className="flex flex-wrap items-center gap-3 border-b border-border bg-card px-4 py-5 lg:px-8">
-        <div className="min-w-[200px] flex-1">
+        <div className="w-full min-w-0 sm:w-auto sm:min-w-[200px] sm:flex-1">
           <div className="text-[13px] font-semibold text-muted-foreground">Question bank</div>
           <h1 className="mt-0.5 text-2xl font-extrabold">{title}</h1>
         </div>
@@ -144,8 +144,11 @@ export default async function QuestionBankPage({ params, searchParams }: PagePro
         {sel && (
           <aside
             aria-label={`Question ${sel.code}`}
-            className="flex w-full flex-none flex-col gap-4 overflow-auto border-t border-border bg-card p-6 xl:w-[clamp(320px,30vw,420px)] xl:border-t-0 xl:border-l"
+            className="fixed inset-0 z-40 flex w-full flex-none flex-col gap-4 overflow-auto bg-card p-4 sm:p-6 lg:static lg:z-auto lg:border-t lg:border-border xl:w-[clamp(320px,30vw,420px)] xl:border-t-0 xl:border-l"
           >
+            <Link href={`?${query}`} scroll={false} className="-mx-1 -mt-1 flex h-11 w-fit items-center gap-1.5 rounded-md px-1 text-sm font-semibold text-ink-2 no-underline lg:hidden">
+              ← Back to questions
+            </Link>
             <div className="flex flex-wrap items-center gap-2">
               <span className="font-mono text-xs text-muted-foreground">{sel.code}</span>
               <span className="rounded-full bg-chip px-2 py-[3px] text-xs font-semibold">{TYPE_LABEL[sel.type]}</span>

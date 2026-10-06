@@ -40,9 +40,9 @@ export function ReleaseClient({ slug, termId, rows, canReview, canRelease, logAr
 
   return (
     <>
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(180px,1fr))] overflow-hidden rounded-xl border border-border bg-card">
+      <div className="grid grid-cols-2 overflow-hidden rounded-xl sm:grid-cols-[repeat(auto-fit,minmax(180px,1fr))] border border-border bg-card">
         {(Object.keys(M) as (keyof typeof M)[]).map((k, i) => (
-          <div key={k} className={cn("border-r border-divider px-5 py-[18px]", k === "approved" && "bg-[#FFFDF3] shadow-[inset_0_-3px_0_#F2B705]")}>
+          <div key={k} className={cn("border-r border-b border-divider px-4 py-3.5 sm:border-b-0 sm:px-5 sm:py-[18px]", k === "approved" && "bg-[#FFFDF3] shadow-[inset_0_-3px_0_#F2B705]")}>
             <div className="flex items-center gap-2.5">
               <span className={cn("flex size-[26px] items-center justify-center rounded-full border-2 border-ink font-mono text-xs font-bold", counts[k] ? "bg-ink text-white" : "bg-card")}>{i + 1}</span>
               <span className="text-[15px] font-extrabold">{M[k].label}</span>
@@ -61,7 +61,7 @@ export function ReleaseClient({ slug, termId, rows, canReview, canRelease, logAr
       )}
 
       <div className="overflow-x-auto rounded-xl border border-border bg-card">
-        <div className="grid h-11 min-w-[720px] grid-cols-[32px_100px_minmax(140px,1fr)_150px_120px_200px] items-center gap-3 rounded-t-xl bg-secondary px-5 text-xs font-bold text-ink-2">
+        <div className="hidden h-11 min-w-[720px] sm:grid grid-cols-[32px_100px_minmax(140px,1fr)_150px_120px_200px] items-center gap-3 rounded-t-xl bg-secondary px-5 text-xs font-bold text-ink-2">
           <span />
           <span>Class</span>
           <span>Subjects ready</span>
@@ -74,7 +74,7 @@ export function ReleaseClient({ slug, termId, rows, canReview, canRelease, logAr
           const selectable = r.status === "approved" && canRelease;
           const on = sel.has(r.classArmId);
           return (
-            <div key={r.classArmId} className="grid min-h-[60px] min-w-[720px] grid-cols-[32px_100px_minmax(140px,1fr)_150px_120px_200px] items-center gap-3 border-t border-divider px-5 text-sm">
+            <div key={r.classArmId} className="grid grid-cols-[36px_1fr_auto] items-center gap-x-3 gap-y-2 border-t border-divider px-4 py-3 text-sm first-of-type:border-t-0 sm:min-h-[60px] sm:min-w-[720px] sm:grid-cols-[32px_100px_minmax(140px,1fr)_150px_120px_200px] sm:px-5 sm:py-0 sm:first-of-type:border-t">
               <button
                 type="button"
                 role="checkbox"
@@ -87,14 +87,14 @@ export function ReleaseClient({ slug, termId, rows, canReview, canRelease, logAr
                   else n.add(r.classArmId);
                   return n;
                 })}
-                className={cn("flex size-[22px] items-center justify-center rounded-md border-2 p-0 text-[13px] font-extrabold text-white", on ? "border-ink bg-ink" : selectable ? "border-ink bg-card" : "border-input bg-card opacity-40")}
+                className={cn("flex size-7 items-center justify-center rounded-md border-2 p-0 sm:size-[22px] text-[13px] font-extrabold text-white", on ? "border-ink bg-ink" : selectable ? "border-ink bg-card" : "border-input bg-card opacity-40")}
               >
                 {on ? "✓" : ""}
               </button>
               <Link href={`/s/${slug}/results/classes/${r.classArmId}?term=${termId}&view=bs`} className="font-extrabold">
                 {r.name}
               </Link>
-              <span className="flex items-center gap-2.5">
+              <span className="col-start-2 col-end-4 row-start-2 flex items-center gap-2.5 sm:col-auto sm:row-auto">
                 <span className="h-2 max-w-[220px] flex-1 overflow-hidden rounded bg-chip">
                   <span className="block h-full bg-ink" style={{ width: `${r.subjectsTotal ? (r.subjectsReady / r.subjectsTotal) * 100 : 0}%` }} />
                 </span>
@@ -102,18 +102,19 @@ export function ReleaseClient({ slug, termId, rows, canReview, canRelease, logAr
                   {r.subjectsReady} of {r.subjectsTotal}
                 </span>
               </span>
-              <span className="text-xs leading-snug text-ink-2">
+              <span className={cn("col-start-2 col-end-4 text-xs leading-snug text-ink-2 sm:col-auto", !r.lastBy && !r.lastAt && "max-sm:hidden")}>
                 {r.lastBy ?? "—"}
-                <br />
+                <br className="hidden sm:block" />
+                <span className="sm:hidden"> · </span>
                 <span className="font-mono">{when(r.lastAt)}</span>
               </span>
-              <span>
+              <span className="col-start-3 row-start-1 sm:col-auto sm:row-auto">
                 <span className={cn("inline-flex h-[26px] items-center gap-1.5 rounded-full px-2.5 text-xs font-bold", m.chip)}>
                   <span className={cn("size-[7px] rounded-full border-[1.5px]", m.dot)} />
                   {m.label}
                 </span>
               </span>
-              <span className="flex justify-end gap-1.5">
+              <span className="col-start-2 col-end-4 flex flex-wrap gap-1.5 sm:col-auto sm:justify-end">
                 {r.status === "under_review" && canReview && (
                   <>
                     <button type="button" disabled={pending} onClick={() => act([r.classArmId], "approve", undefined, `${r.name} approved.`)} className="h-[38px] rounded-md bg-ink px-3.5 text-[13px] font-bold text-white">
@@ -167,8 +168,8 @@ export function ReleaseClient({ slug, termId, rows, canReview, canRelease, logAr
       {logArm === null && <p className="text-[13px] text-muted-foreground">Choose Log on a class to see who changed what.</p>}
 
       {confirm && (
-        <div className="fixed inset-0 z-40 flex items-center justify-center bg-[rgba(20,33,61,.5)] p-6">
-          <div role="dialog" aria-modal="true" aria-labelledby="rel-title" className="w-full max-w-[540px] rounded-2xl bg-card p-8 shadow-[0_24px_60px_rgba(20,33,61,.25)]">
+        <div className="fixed inset-0 z-40 flex items-end justify-center bg-[rgba(20,33,61,.5)] p-3 sm:items-center sm:p-6">
+          <div role="dialog" aria-modal="true" aria-labelledby="rel-title" className="w-full max-w-[540px] rounded-2xl bg-card p-5 shadow-[0_24px_60px_rgba(20,33,61,.25)] sm:p-8">
             <h2 id="rel-title" className="text-[22px] font-extrabold">
               Release {chosen.map((r) => r.name).join(" and ")}?
             </h2>
@@ -176,7 +177,7 @@ export function ReleaseClient({ slug, termId, rows, canReview, canRelease, logAr
               <b>{chosen.reduce((a, r) => a + r.students, 0)}</b> students&apos; results become visible to them, and to parents at /results with their result PIN.
             </p>
             <div className="rounded-[10px] border border-[#F3D3B5] bg-[#FDF1E6] px-4 py-3.5 text-sm leading-normal text-[#7A3B0A]">After release, changing a score needs a reason and is shown in the change log.</div>
-            <div className="mt-6 flex justify-end gap-2.5">
+            <div className="mt-6 flex flex-col-reverse gap-2.5 sm:flex-row sm:justify-end">
               <button type="button" onClick={() => setConfirm(false)} className="h-12 rounded-md border-[1.5px] border-input bg-card px-[18px] text-[15px] font-semibold">
                 Not yet
               </button>
@@ -195,7 +196,7 @@ export function ReleaseClient({ slug, termId, rows, canReview, canRelease, logAr
         </div>
       )}
       {toast && (
-        <div role="status" className="fixed right-8 bottom-8 z-50 flex items-center gap-2.5 rounded-[10px] bg-ink px-[18px] py-3.5 text-sm text-white shadow-[0_8px_24px_rgba(20,33,61,.25)]">
+        <div role="status" className="fixed inset-x-4 bottom-4 z-50 flex sm:inset-x-auto sm:right-8 sm:bottom-8 items-center gap-2.5 rounded-[10px] bg-ink px-[18px] py-3.5 text-sm text-white shadow-[0_8px_24px_rgba(20,33,61,.25)]">
           <span className="flex size-[22px] items-center justify-center rounded-full bg-success">✓</span>
           {toast}
         </div>

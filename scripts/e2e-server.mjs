@@ -43,6 +43,8 @@ const run = (args) => {
 };
 
 rmSync(".pglite-e2e", { recursive: true, force: true });
+// Cached lookups from the last run point at rows the fresh seed no longer has.
+for (const dir of ["cache", "dev/cache"]) rmSync(`${env.NEXT_DIST_DIR}/${dir}`, { recursive: true, force: true });
 run(["tsx", "scripts/migrate.ts"]);
 run(["tsx", "--conditions=react-server", "scripts/seed.ts"]);
 if (prod) run(["next", "build"]);

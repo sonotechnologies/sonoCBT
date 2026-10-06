@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 import { Logo } from "@/components/brand/logo";
 import { cn } from "@/lib/utils";
 
@@ -16,24 +17,25 @@ function initialsOf(name: string) {
     .join("");
 }
 
-export function StaffSidebar({
-  schoolName,
-  termLabel,
-  userName,
-  userRole,
-  items,
-}: {
+type SidebarProps = {
   schoolName: string;
   termLabel: string;
   userName: string;
   userRole: string;
   items: NavItem[];
-}) {
+};
+
+export function StaffSidebar({ schoolName, termLabel, userName, userRole, items, onClose, className }: SidebarProps & { onClose?: () => void; className?: string }) {
   const pathname = usePathname();
   return (
-    <nav aria-label="Main" className="flex h-full w-[232px] flex-col bg-ink text-paper">
-      <div className="flex-none px-5 pt-[22px] pb-[18px]">
+    <nav aria-label="Main" className={cn("flex h-full w-[232px] flex-col bg-ink text-paper", className)}>
+      <div className="flex flex-none items-center justify-between px-5 pt-[22px] pb-[18px]">
         <Logo variant="reversed" size={24} />
+        {onClose && (
+          <button type="button" onClick={onClose} aria-label="Close menu" className="-mr-2 flex size-11 items-center justify-center rounded-md text-2xl leading-none text-on-ink-muted hover:bg-ink-raised hover:text-white">
+            ×
+          </button>
+        )}
       </div>
       <div className="mx-3 mb-3 flex flex-none flex-col gap-0.5 rounded-md bg-ink-raised px-3 py-2.5">
         <div className="text-[13px] font-bold">{schoolName}</div>
@@ -56,7 +58,7 @@ export function StaffSidebar({
               {!it.href && <span className="ml-auto text-[11px] font-medium text-on-ink-soft/70">Soon</span>}
             </>
           );
-          const base = "flex h-10 items-center gap-2.5 rounded-md px-3 text-sm no-underline";
+          const base = "flex h-11 items-center lg:h-10 gap-2.5 rounded-md px-3 text-sm no-underline";
           return (
             <li key={it.label}>
               {it.href ? (
@@ -94,28 +96,47 @@ export function StaffSidebar({
   );
 }
 
-/** Below the lg breakpoint the sidebar is hidden; this menu carries the same links. */
-export function MobileNav({ items }: { items: NavItem[] }) {
+/** Below the lg breakpoint the sidebar is hidden; a menu button opens it as a drawer. */
+export function MobileNav(props: SidebarProps) {
   const pathname = usePathname();
-  const live = items.filter((i) => i.href);
+  const [open, setOpen] = useState(false);
+  const [at, setAt] = useState(pathname);
+  const button = useRef<HTMLButtonElement>(null);
+  // Close after navigating.
+  if (at !== pathname) {
+    setAt(pathname);
+    setOpen(false);
+  }
+  useEffect(() => {
+    if (!open) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    window.addEventListener("keydown", onKey);
+    const btn = button.current;
+    return () => {
+      document.body.style.overflow = prev;
+      window.removeEventListener("keydown", onKey);
+      btn?.focus();
+    };
+  }, [open]);
+  const badge = props.items.some((i) => i.badge);
   return (
-    <details className="relative lg:hidden">
-      <summary className="flex h-10 cursor-pointer list-none items-center rounded-md border-[1.5px] border-input px-3 text-sm font-semibold">
-        Menu
-      </summary>
-      <ul className="absolute left-0 z-20 mt-1 flex w-56 flex-col rounded-lg border border-border bg-card p-1 shadow-[0_4px_12px_rgba(20,33,61,.08)]">
-        {live.map((it) => (
-          <li key={it.label}>
-            <Link
-              href={it.href!}
-              aria-current={pathname.startsWith(it.href!.replace(/\/setup\/.*$/, "/setup")) ? "page" : undefined}
-              className="flex h-11 items-center rounded-md px-3 text-sm font-semibold no-underline hover:bg-secondary aria-[current=page]:bg-secondary"
-            >
-              {it.label}
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </details>
+    <>
+      <button ref={button} type="button" onClick={() => setOpen(true)} aria-expanded={open} aria-label="Open menu" className="relative -ml-2 flex size-11 items-center justify-center rounded-md hover:bg-secondary lg:hidden">
+        <svg aria-hidden width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+          <path d="M3 6h16M3 11h16M3 16h16" />
+        </svg>
+        {badge && <span aria-hidden className="absolute top-2 right-2 size-2 rounded-full bg-pencil ring-2 ring-card" />}
+      </button>
+      {open && (
+        <div className="fixed inset-0 z-50 lg:hidden" role="dialog" aria-modal="true" aria-label="Menu">
+          <button type="button" aria-label="Close menu" tabIndex={-1} onClick={() => setOpen(false)} className="absolute inset-0 bg-ink/50 [animation:fade-in_.18s_ease-out]" />
+          <div className="absolute inset-y-0 left-0 w-[min(300px,85vw)] shadow-[0_0_40px_rgba(0,0,0,.3)] [animation:slide-in_.18s_ease-out]">
+            <StaffSidebar {...props} onClose={() => setOpen(false)} className="w-full" />
+          </div>
+        </div>
+      )}
+    </>
   );
 }

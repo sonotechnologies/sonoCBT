@@ -97,29 +97,29 @@ export function ScaleEditor({ slug, initial }: { slug: string; initial: GradeBan
         Grading scale
       </h2>
       <p className="mt-1 text-sm text-ink-2">Used for every subject&apos;s grade and remark on the broadsheet and report cards. WAEC A1–F9 to start with.</p>
-      <table className="mt-4 text-sm">
+      <table className="mt-4 w-full text-sm sm:w-auto">
         <thead>
           <tr className="text-left text-xs font-bold text-muted-foreground">
-            <th className="pr-3 pb-1.5">Grade</th>
-            <th className="pr-3 pb-1.5">From</th>
-            <th className="pr-3 pb-1.5">To</th>
+            <th className="pr-1.5 pb-1.5 sm:pr-3">Grade</th>
+            <th className="pr-1.5 pb-1.5 sm:pr-3">From</th>
+            <th className="pr-1.5 pb-1.5 sm:pr-3">To</th>
             <th className="pb-1.5">Remark</th>
           </tr>
         </thead>
         <tbody>
           {bands.map((b, i) => (
             <tr key={i}>
-              <td className="py-1 pr-3">
-                <input value={b.grade} onChange={(e) => set(i, "grade", e.target.value)} maxLength={4} aria-label="Grade" className="h-10 w-16 rounded-md border-[1.5px] border-input px-2 font-mono font-bold" />
+              <td className="py-1 pr-1.5 sm:pr-3">
+                <input value={b.grade} onChange={(e) => set(i, "grade", e.target.value)} maxLength={4} aria-label="Grade" className="h-10 w-14 rounded-md border-[1.5px] border-input px-2 font-mono font-bold sm:w-16" />
               </td>
-              <td className="py-1 pr-3">
-                <input type="number" step="0.01" value={b.min} onChange={(e) => set(i, "min", e.target.value)} aria-label={`${b.grade} from`} className="h-10 w-20 rounded-md border-[1.5px] border-input px-2 text-right font-mono" />
+              <td className="py-1 pr-1.5 sm:pr-3">
+                <input type="number" step="0.01" value={b.min} onChange={(e) => set(i, "min", e.target.value)} aria-label={`${b.grade} from`} className="h-10 w-[68px] rounded-md border-[1.5px] border-input px-2 text-right font-mono sm:w-20" />
               </td>
-              <td className="py-1 pr-3">
-                <input type="number" step="0.01" value={b.max} onChange={(e) => set(i, "max", e.target.value)} aria-label={`${b.grade} to`} className="h-10 w-20 rounded-md border-[1.5px] border-input px-2 text-right font-mono" />
+              <td className="py-1 pr-1.5 sm:pr-3">
+                <input type="number" step="0.01" value={b.max} onChange={(e) => set(i, "max", e.target.value)} aria-label={`${b.grade} to`} className="h-10 w-[68px] rounded-md border-[1.5px] border-input px-2 text-right font-mono sm:w-20" />
               </td>
               <td className="py-1">
-                <input value={b.remark} onChange={(e) => set(i, "remark", e.target.value)} maxLength={40} aria-label={`${b.grade} remark`} className="h-10 w-40 rounded-md border-[1.5px] border-input px-2" />
+                <input value={b.remark} onChange={(e) => set(i, "remark", e.target.value)} maxLength={40} aria-label={`${b.grade} remark`} className="h-10 w-full min-w-[90px] rounded-md border-[1.5px] border-input px-2 sm:w-40" />
               </td>
             </tr>
           ))}

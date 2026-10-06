@@ -325,3 +325,101 @@
   user-select: none;
   -webkit-user-select: none;
 }
+
+/* ── Phones ─────────────────────────────────────────────────────────────── */
+@keyframes slide-in {
+  from {
+    transform: translateX(-100%);
+  }
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+@media (max-width: 639px) {
+  /* iOS zooms into any field under 16px; keep the page still while typing. */
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+  /*
+   * .stack-table: a table that becomes one card per row on phones. The first
+   * cell is the row's title; other cells flow underneath, labelled from
+   * data-label; data-cell="full" takes its own line (actions, long text).
+   */
+  .stack-table {
+    min-width: 0 !important;
+  }
+  .stack-table thead {
+    display: none;
+  }
+  .stack-table tr {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 14px;
+    height: auto !important;
+    padding: 12px 16px;
+  }
+  .stack-table td {
+    display: block;
+    height: auto !important;
+    padding: 0 !important;
+    text-align: left !important;
+    white-space: normal;
+  }
+  .stack-table td:first-child,
+  .stack-table td[data-cell="full"] {
+    width: 100%;
+  }
+  .stack-table td[data-cell="inline"] {
+    width: auto;
+  }
+  .stack-table td[data-cell="full"] {
+    max-width: none;
+  }
+  .stack-table td[data-cell="full"] > * {
+    justify-content: flex-start;
+  }
+  .stack-table td[data-label]::before {
+    content: attr(data-label) " ";
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted-foreground);
+  }
+  .stack-table td:empty,
+  .stack-table td[data-cell="hide"] {
+    display: none;
+  }
+  /* A row of filter chips scrolls sideways instead of stacking 3 rows deep. */
+  .chip-row {
+    flex-wrap: nowrap !important;
+    overflow-x: auto;
+    scrollbar-width: none;
+    margin-inline: -16px;
+    padding-inline: 16px;
+  }
+  .chip-row::-webkit-scrollbar {
+    display: none;
+  }
+  .chip-row > * {
+    flex: none;
+  }
+  /* Checkboxes and radios are hard to hit at 16px. */
+  input[type="checkbox"],
+  input[type="radio"] {
+    min-width: 20px;
+    min-height: 20px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

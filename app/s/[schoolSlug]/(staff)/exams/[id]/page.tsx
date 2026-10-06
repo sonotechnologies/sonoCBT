@@ -177,7 +177,7 @@ export default async function ExamBuilderPage({ params, searchParams }: PageProp
             </Link>
           )}
         </div>
-        <nav aria-label="Steps" className="-mb-px mt-4 flex gap-1 overflow-x-auto">
+        <nav aria-label="Steps" className="-mb-px mt-4 flex justify-between gap-1 overflow-x-auto sm:justify-start">
           {STEPS.map(([s, label], i) => {
             const current = s === step;
             const done = i < stepIndex;
@@ -186,12 +186,12 @@ export default async function ExamBuilderPage({ params, searchParams }: PageProp
                 key={s}
                 href={`${base}?step=${s}`}
                 aria-current={current ? "step" : undefined}
-                className={cn("flex h-12 items-center gap-2.5 px-4 text-sm whitespace-nowrap text-foreground no-underline", current ? "font-extrabold shadow-[inset_0_-3px_0_#14213D]" : "font-semibold")}
+                className={cn("flex h-12 min-w-11 items-center justify-center gap-2.5 px-2 text-sm whitespace-nowrap sm:px-4 text-foreground no-underline", current ? "font-extrabold shadow-[inset_0_-3px_0_#14213D]" : "font-semibold")}
               >
                 <span className={cn("flex size-6 items-center justify-center rounded-full border-2 font-mono text-xs font-semibold", done ? "border-ink bg-ink text-white" : current ? "border-ink bg-pencil" : "border-[#9AA1B0] bg-card")}>
                   {done ? "✓" : i + 1}
                 </span>
-                {label}
+                <span className={current ? undefined : "sr-only sm:not-sr-only"}>{label}</span>
               </Link>
             );
           })}

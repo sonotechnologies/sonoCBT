@@ -87,7 +87,7 @@ export default async function PlatformSchool({ params }: PageProps<"/platform/sc
           Payments
         </h2>
         {payments.length ? (
-          <table className="w-full overflow-hidden rounded-xl border border-border bg-card text-sm">
+          <table className="stack-table w-full overflow-hidden rounded-xl border border-border bg-card text-sm">
             <thead className="bg-secondary text-left text-xs text-ink-2">
               <tr>
                 <th className="px-4 py-2.5">Date</th>
@@ -102,11 +102,11 @@ export default async function PlatformSchool({ params }: PageProps<"/platform/sc
               {payments.map((p) => (
                 <tr key={p.id} className="border-t border-divider">
                   <td className="px-4 py-2.5 font-mono text-[13px]">{formatDate(p.paidAt ?? p.createdAt)}</td>
-                  <td className="px-4 py-2.5">{planByCode(p.plan).name}</td>
-                  <td className="px-4 py-2.5 text-right font-mono">{p.studentCount}</td>
-                  <td className="px-4 py-2.5 text-right font-mono">{naira(p.amount)}</td>
-                  <td className="px-4 py-2.5">{p.status}</td>
-                  <td className="px-4 py-2.5 font-mono text-xs">{p.reference}</td>
+                  <td data-label="Plan" className="px-4 py-2.5">{planByCode(p.plan).name}</td>
+                  <td data-label="Students" className="px-4 py-2.5 text-right font-mono">{p.studentCount}</td>
+                  <td data-label="Amount" className="px-4 py-2.5 text-right font-mono">{naira(p.amount)}</td>
+                  <td data-label="Status" className="px-4 py-2.5">{p.status}</td>
+                  <td data-label="Reference" className="px-4 py-2.5 font-mono text-xs">{p.reference}</td>
                 </tr>
               ))}
             </tbody>

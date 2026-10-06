@@ -27,7 +27,7 @@ export function StudentMoves({ slug, student, arms }: { slug: string; student: {
       </button>
       {open && (
         <div className="fixed inset-0 z-40 flex items-center justify-center bg-[rgba(20,33,61,.5)] p-4" onClick={(e) => e.target === e.currentTarget && setOpen(false)}>
-          <div role="dialog" aria-modal="true" aria-labelledby={`mv-${student.id}`} className="flex w-full max-w-[460px] flex-col gap-4 rounded-2xl bg-card p-6 text-left shadow-[0_24px_60px_rgba(20,33,61,.25)]">
+          <div role="dialog" aria-modal="true" aria-labelledby={`mv-${student.id}`} className="flex max-h-[90dvh] w-full max-w-[460px] flex-col gap-4 overflow-y-auto rounded-2xl bg-card p-5 text-left sm:p-6 shadow-[0_24px_60px_rgba(20,33,61,.25)]">
             <h2 id={`mv-${student.id}`} className="text-lg font-extrabold">
               {student.name}
             </h2>

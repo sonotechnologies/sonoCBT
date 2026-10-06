@@ -27,7 +27,7 @@ export default async function ExamsPage({ params, searchParams }: PageProps<"/s/
   return (
     <main className="flex min-w-0 flex-1 flex-col">
       <div className="flex flex-wrap items-center gap-3 border-b border-border bg-card px-4 py-5 lg:px-8">
-        <div className="min-w-[200px] flex-1">
+        <div className="min-w-0 flex-1">
           <div className="text-[13px] font-semibold text-muted-foreground">Exams</div>
           <h1 className="mt-0.5 text-2xl font-extrabold">{filter ? PHASE[filter].label : "Current and upcoming"}</h1>
         </div>
@@ -35,9 +35,9 @@ export default async function ExamsPage({ params, searchParams }: PageProps<"/s/
           New exam
         </Link>
       </div>
-      <nav aria-label="Filter" className="flex flex-wrap gap-2 border-b border-border bg-background px-4 py-3 lg:px-8">
+      <nav aria-label="Filter" className="chip-row flex flex-wrap gap-2 border-b border-border bg-background px-4 py-3 lg:px-8">
         {[["", "Current & upcoming"], ...Object.entries(PHASE).map(([k, v]) => [k, `${v.label} ${counts[k]}`])].map(([k, l]) => (
-          <Link key={k} href={k ? `?show=${k}` : "?"} aria-current={filter === k ? "page" : undefined} className={cn("h-[34px] rounded-md border px-3 text-[13px] leading-[32px] font-semibold no-underline", filter === k ? "border-ink bg-ink text-white" : "border-border bg-card text-foreground")}>
+          <Link key={k} href={k ? `?show=${k}` : "?"} aria-current={filter === k ? "page" : undefined} className={cn("flex h-10 items-center rounded-md border px-3 text-[13px] font-semibold whitespace-nowrap no-underline sm:h-[34px]", filter === k ? "border-ink bg-ink text-white" : "border-border bg-card text-foreground")}>
             {l}
           </Link>
         ))}
@@ -53,7 +53,7 @@ export default async function ExamsPage({ params, searchParams }: PageProps<"/s/
           </div>
         ) : (
           <div className="relative overflow-x-auto rounded-xl border border-border bg-card">
-            <table className="w-full min-w-[720px] text-sm">
+            <table className="stack-table w-full min-w-[720px] text-sm">
               <thead className="border-b border-border text-left text-xs font-bold tracking-[.06em] text-muted-foreground uppercase">
                 <tr>
                   <th className="px-4 py-3">Exam</th>
@@ -65,9 +65,9 @@ export default async function ExamsPage({ params, searchParams }: PageProps<"/s/
               </thead>
               <tbody className="divide-y divide-divider">
                 {rows.map((e) => (
-                  <tr key={e.id} className="hover:bg-background">
+                  <tr key={e.id} className="relative hover:bg-background">
                     <td className="px-4 py-3">
-                      <Link href={`/s/${schoolSlug}/exams/${e.id}`} className="font-bold">
+                      <Link href={`/s/${schoolSlug}/exams/${e.id}`} className="font-bold after:absolute after:inset-0 sm:after:hidden">
                         {e.title}
                       </Link>
                       <div className="text-xs text-muted-foreground">
@@ -75,11 +75,11 @@ export default async function ExamsPage({ params, searchParams }: PageProps<"/s/
                         {e.totalMarks ? ` · ${e.totalMarks} marks` : ""}
                       </div>
                     </td>
-                    <td className="px-4 py-3">{e.classes.join(", ")}</td>
-                    <td className="px-4 py-3 font-mono text-[13px] whitespace-nowrap">
+                    <td data-label="Classes" className="px-4 py-3">{e.classes.join(", ")}</td>
+                    <td data-label="Starts" className="px-4 py-3 font-mono text-[13px] whitespace-nowrap">
                       {formatDate(e.windowStart)} · {formatTime(e.windowStart)}
                     </td>
-                    <td className="px-4 py-3 text-right font-mono">{e.status === "draft" ? "—" : e.candidates}</td>
+                    <td data-label="Students" className="px-4 py-3 text-right font-mono">{e.status === "draft" ? "—" : e.candidates}</td>
                     <td className="px-4 py-3">
                       <span className={cn("rounded-full px-2 py-[3px] text-xs font-semibold", PHASE[e.phase].cls)}>{PHASE[e.phase].label}</span>
                     </td>

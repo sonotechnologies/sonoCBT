@@ -147,7 +147,7 @@ export default async function ClassResultsPage({ params, searchParams }: PagePro
             </Link>{" "}
             · {term.label}
           </div>
-          <h1 className="mt-0.5 text-[22px] font-extrabold">{view === "ca" ? `${subjName ?? ""} · CA scores` : "Class broadsheet"}</h1>
+          <h1 className="mt-0.5 text-[22px] font-extrabold">{view === "ca" ? (subjName ? `${subjName} · CA scores` : "CA scores") : "Class broadsheet"}</h1>
         </div>
         <span className={cn("rounded-full px-2.5 py-1 text-xs font-semibold", STATUS[status].cls)}>{STATUS[status].label}</span>
         <nav aria-label="View" className="flex rounded-md bg-secondary p-[3px]">

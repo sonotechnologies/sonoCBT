@@ -18,7 +18,8 @@ export function LobbyCountdown({
 }: Window & { labelClassName?: string; digitsClassName?: string }) {
   const now = useServerNow(serverNow);
   const phase = examPhase({ windowStart: new Date(start), windowEnd: new Date(end) }, new Date(now));
-  const label = phase === "upcoming" ? "Starts in" : phase === "open" ? "Open now" : "Closed";
+  const label = phase === "upcoming" ? "Starts in" : phase === "open" ? "Open now · closes in" : "Closed";
+  const left = phase === "upcoming" ? (start - now) / 1000 : phase === "open" ? (end - now) / 1000 : 0;
   return (
     <>
       <div className={labelClassName}>{label}</div>
@@ -26,9 +27,9 @@ export function LobbyCountdown({
         className={cn("font-mono font-semibold tabular-nums", digitsClassName)}
         role="timer"
         aria-live="off"
-        aria-label={phase === "upcoming" ? `Starts in ${formatCountdown((start - now) / 1000)}` : label}
+        aria-label={phase === "closed" ? label : `${label} ${formatCountdown(left)}`}
       >
-        {formatCountdown(phase === "upcoming" ? (start - now) / 1000 : 0)}
+        {phase === "closed" ? "—" : formatCountdown(left)}
       </div>
     </>
   );

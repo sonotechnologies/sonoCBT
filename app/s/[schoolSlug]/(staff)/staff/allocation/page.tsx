@@ -41,7 +41,7 @@ export default async function AllocationPage({ params }: PageProps<"/s/[schoolSl
             </h2>
             <ul>
               {arm.offerings.map((o) => (
-                <li key={o.id} className="grid grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)] items-center gap-3 border-t border-divider px-4 py-2 first:border-t-0">
+                <li key={o.id} className="grid grid-cols-1 items-center gap-x-3 gap-y-1.5 border-t border-divider px-4 py-2.5 first:border-t-0 min-[480px]:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)] min-[480px]:py-2">
                   <span className="truncate text-sm font-semibold">{o.subject}</span>
                   <TeacherSelect slug={schoolSlug} offeringId={o.id} label={`${o.subject}, ${arm.name}`} value={o.teacherId} teachers={teachers} />
                 </li>

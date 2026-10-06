@@ -248,7 +248,7 @@ export function CaGrid(p: GridProps) {
 
       {paste && (
         <div className="fixed inset-0 z-40 flex items-center justify-center bg-[rgba(20,33,61,.5)] p-4">
-          <div role="dialog" aria-modal="true" aria-labelledby="paste-title" className="w-full max-w-lg rounded-2xl bg-card p-6">
+          <div role="dialog" aria-modal="true" aria-labelledby="paste-title" className="max-h-[90dvh] w-full max-w-lg overflow-y-auto rounded-2xl bg-card p-5 sm:p-6">
             <h2 id="paste-title" className="text-lg font-extrabold">
               Paste from Excel
             </h2>

@@ -49,13 +49,13 @@ export default async function ReportCardsPage({ params, searchParams }: PageProp
           <h1 className="mt-0.5 text-2xl font-extrabold">Remarks, ratings &amp; printing</h1>
         </div>
         {terms.length > 1 && (
-          <nav aria-label="Term" className="flex flex-wrap gap-1.5">
+          <nav aria-label="Term" className="chip-row flex w-full flex-wrap gap-1.5 sm:w-auto">
             {terms.slice(0, 4).map((t) => (
               <Link
                 key={t.id}
                 href={`?term=${t.id}`}
                 aria-current={t.id === term.id ? "page" : undefined}
-                className={cn("h-9 rounded-md border px-3 text-[13px] leading-[34px] font-semibold no-underline", t.id === term.id ? "border-ink bg-ink text-white" : "border-border bg-card text-foreground")}
+                className={cn("flex h-10 items-center rounded-md border px-3 text-[13px] font-semibold whitespace-nowrap no-underline sm:h-9", t.id === term.id ? "border-ink bg-ink text-white" : "border-border bg-card text-foreground")}
               >
                 {t.label}
               </Link>

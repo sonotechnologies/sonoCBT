@@ -34,9 +34,9 @@ export default async function ResultPinsPage({ params, searchParams }: PageProps
               Parents check at <span className="font-mono">/results?school={ctx.school.slug}</span> with the admission number and a PIN.
             </p>
           </div>
-          <nav aria-label="Term" className="flex w-full flex-wrap gap-1.5">
+          <nav aria-label="Term" className="chip-row flex w-full flex-wrap gap-1.5">
             {terms.slice(0, 4).map((t) => (
-              <Link key={t.id} href={`?term=${t.id}`} aria-current={t.id === term.id ? "page" : undefined} className={cn("h-9 rounded-md border px-3 text-[13px] leading-[34px] font-semibold no-underline", t.id === term.id ? "border-ink bg-ink text-white" : "border-border bg-card text-foreground")}>
+              <Link key={t.id} href={`?term=${t.id}`} aria-current={t.id === term.id ? "page" : undefined} className={cn("flex h-10 items-center rounded-md border px-3 text-[13px] font-semibold whitespace-nowrap no-underline sm:h-9", t.id === term.id ? "border-ink bg-ink text-white" : "border-border bg-card text-foreground")}>
                 {t.label}
               </Link>
             ))}
@@ -50,7 +50,7 @@ export default async function ResultPinsPage({ params, searchParams }: PageProps
             Batches
           </h2>
           {batches.length ? (
-            <table className="w-full overflow-hidden rounded-xl border border-border bg-card text-sm">
+            <table className="stack-table w-full overflow-hidden rounded-xl border border-border bg-card text-sm">
               <thead className="bg-secondary text-left text-xs text-ink-2">
                 <tr>
                   <th className="px-4 py-2.5">Batch</th>
@@ -65,14 +65,14 @@ export default async function ResultPinsPage({ params, searchParams }: PageProps
                 {batches.map((b) => (
                   <tr key={b.batch} className="border-t border-divider">
                     <td className="px-4 py-2.5 font-mono font-semibold">{b.batch}</td>
-                    <td className="px-4 py-2.5 font-mono text-[13px]">
+                    <td data-label="Serials" className="px-4 py-2.5 font-mono text-[13px]">
                       {b.first}
                       {b.count > 1 ? ` – ${b.last.slice(-6)}` : ""}
                     </td>
-                    <td className="px-4 py-2.5 text-right font-mono">{b.count}</td>
-                    <td className="px-4 py-2.5 text-right font-mono">{b.used}</td>
-                    <td className="px-4 py-2.5 text-right font-mono">{b.usedUp}</td>
-                    <td className="px-4 py-2.5 text-[13px] text-ink-2">
+                    <td data-label="PINs" className="px-4 py-2.5 text-right font-mono">{b.count}</td>
+                    <td data-label="Used" className="px-4 py-2.5 text-right font-mono">{b.used}</td>
+                    <td data-label="Used up" className="px-4 py-2.5 text-right font-mono">{b.usedUp}</td>
+                    <td data-label="Made" className="px-4 py-2.5 text-[13px] text-ink-2">
                       {formatDate(new Date(b.createdAt))}
                       {b.by ? ` · ${b.by}` : ""}
                     </td>
@@ -90,7 +90,7 @@ export default async function ResultPinsPage({ params, searchParams }: PageProps
             Usage log
           </h2>
           {usage.length ? (
-            <table className="w-full overflow-hidden rounded-xl border border-border bg-card text-sm">
+            <table className="stack-table w-full overflow-hidden rounded-xl border border-border bg-card text-sm">
               <thead className="bg-secondary text-left text-xs text-ink-2">
                 <tr>
                   <th className="px-4 py-2.5">Serial</th>
@@ -103,13 +103,13 @@ export default async function ResultPinsPage({ params, searchParams }: PageProps
                 {usage.map((u) => (
                   <tr key={u.serial} className="border-t border-divider">
                     <td className="px-4 py-2.5 font-mono">{u.serial}</td>
-                    <td className="px-4 py-2.5">
+                    <td data-label="Student" className="px-4 py-2.5">
                       {u.studentName ?? "—"} {u.admissionNo && <span className="font-mono text-[13px] text-muted-foreground">{u.admissionNo}</span>}
                     </td>
-                    <td className="px-4 py-2.5 text-right font-mono">
+                    <td data-label="Views" className="px-4 py-2.5 text-right font-mono">
                       {u.uses} of {u.maxUses}
                     </td>
-                    <td className="px-4 py-2.5 font-mono text-[13px]">{u.lastUsedAt ? `${formatDate(u.lastUsedAt)} ${formatTime(u.lastUsedAt)}` : "—"}</td>
+                    <td data-label="Last used" className="px-4 py-2.5 font-mono text-[13px]">{u.lastUsedAt ? `${formatDate(u.lastUsedAt)} ${formatTime(u.lastUsedAt)}` : "—"}</td>
                   </tr>
                 ))}
               </tbody>

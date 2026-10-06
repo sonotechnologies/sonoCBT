@@ -40,7 +40,7 @@ export function TeacherSelect({
           });
         }}
         className={cn(
-          "h-9 min-w-0 flex-1 rounded-md border-[1.5px] border-input bg-card px-2 text-[13px]",
+          "h-11 min-w-0 flex-1 rounded-md border-[1.5px] border-input bg-card px-2 text-[13px] sm:h-9",
           !current && "text-muted-foreground",
         )}
       >
